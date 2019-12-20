@@ -22,16 +22,16 @@
 </template>
 
 <script>
-  export default {
+export default {
     props: {
-      item: {
-        default: () => ({})
-      },
-      hoverMode: {
-        default: false
-      }
+        item: {
+            default: () => ({})
+        },
+        hoverMode: {
+            default: false
+        }
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -11,18 +11,18 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
-  export default {
+export default {
     computed: {
-      ...mapState('d2admin/fullscreen', [
-        'active'
-      ])
+        ...mapState('d2admin/fullscreen', [
+            'active'
+        ])
     },
     methods: {
-      ...mapActions('d2admin/fullscreen', [
-        'toggle'
-      ])
+        ...mapActions('d2admin/fullscreen', [
+            'toggle'
+        ])
     }
-  }
+}
 </script>

@@ -15,20 +15,20 @@
 </template>
 
 <script>
-  import scroll from './mixins/normal'
+import scroll from './mixins/normal'
 
-  export default {
+export default {
     name: 'd2-container-card',
     mixins: [
-      scroll
+        scroll
     ],
     mounted () {
-      // 增加滚动事件监听
-      this.addScrollListener()
+        // 增加滚动事件监听
+        this.addScrollListener()
     },
     beforeDestroy () {
-      // 移除滚动事件监听
-      this.removeScrollListener()
+        // 移除滚动事件监听
+        this.removeScrollListener()
     }
-  }
+}
 </script>

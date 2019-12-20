@@ -11,26 +11,26 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
-  export default {
+export default {
     computed: {
-      ...mapState('d2admin/user', [
-        'info'
-      ])
+        ...mapState('d2admin/user', [
+            'info'
+        ])
     },
     methods: {
-      ...mapActions('d2admin/account', [
-        'logout'
-      ]),
-      /**
+        ...mapActions('d2admin/account', [
+            'logout'
+        ]),
+        /**
        * @description 登出
        */
-      logOff () {
-        this.logout({
-          confirm: true
-        })
-      }
+        logOff () {
+            this.logout({
+                confirm: true
+            })
+        }
     }
-  }
+}
 </script>

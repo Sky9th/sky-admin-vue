@@ -84,79 +84,79 @@
 </template>
 
 <script>
-  import d2MenuSide from './components/menu-side'
-  import d2MenuHeader from './components/menu-header'
-  import d2Tabs from './components/tabs'
-  import d2HeaderFullscreen from './components/header-fullscreen'
-  import d2HeaderLocales from './components/header-locales'
-  import d2HeaderSearch from './components/header-search'
-  import d2HeaderSize from './components/header-size'
-  import d2HeaderTheme from './components/header-theme'
-  import d2HeaderUser from './components/header-user'
-  import d2HeaderLog from './components/header-log'
-  import d2HeaderColor from './components/header-color'
-  import { mapState, mapGetters, mapActions } from 'vuex'
-  import mixinSearch from './mixins/search'
+import d2MenuSide from './components/menu-side'
+import d2MenuHeader from './components/menu-header'
+import d2Tabs from './components/tabs'
+import d2HeaderFullscreen from './components/header-fullscreen'
+import d2HeaderLocales from './components/header-locales'
+import d2HeaderSearch from './components/header-search'
+import d2HeaderSize from './components/header-size'
+import d2HeaderTheme from './components/header-theme'
+import d2HeaderUser from './components/header-user'
+import d2HeaderLog from './components/header-log'
+import d2HeaderColor from './components/header-color'
+import { mapState, mapGetters, mapActions } from 'vuex'
+import mixinSearch from './mixins/search'
 
-  export default {
+export default {
     name: 'd2-layout-header-aside',
     mixins: [
-      mixinSearch
+        mixinSearch
     ],
     components: {
-      d2MenuSide,
-      d2MenuHeader,
-      d2Tabs,
-      d2HeaderFullscreen,
-      d2HeaderLocales,
-      d2HeaderSearch,
-      d2HeaderSize,
-      d2HeaderTheme,
-      d2HeaderUser,
-      d2HeaderLog,
-      d2HeaderColor
+        d2MenuSide,
+        d2MenuHeader,
+        d2Tabs,
+        d2HeaderFullscreen,
+        d2HeaderLocales,
+        d2HeaderSearch,
+        d2HeaderSize,
+        d2HeaderTheme,
+        d2HeaderUser,
+        d2HeaderLog,
+        d2HeaderColor
     },
     data () {
-      return {
+        return {
         // [侧边栏宽度] 正常状态
-        asideWidth: '200px',
-        // [侧边栏宽度] 折叠状态
-        asideWidthCollapse: '65px'
-      }
+            asideWidth: '200px',
+            // [侧边栏宽度] 折叠状态
+            asideWidthCollapse: '65px'
+        }
     },
     computed: {
-      ...mapState('d2admin', {
-        keepAlive: state => state.page.keepAlive,
-        grayActive: state => state.gray.active,
-        transitionActive: state => state.transition.active,
-        asideCollapse: state => state.menu.asideCollapse
-      }),
-      ...mapGetters('d2admin', {
-        themeActiveSetting: 'theme/activeSetting'
-      }),
-      /**
+        ...mapState('d2admin', {
+            keepAlive: state => state.page.keepAlive,
+            grayActive: state => state.gray.active,
+            transitionActive: state => state.transition.active,
+            asideCollapse: state => state.menu.asideCollapse
+        }),
+        ...mapGetters('d2admin', {
+            themeActiveSetting: 'theme/activeSetting'
+        }),
+        /**
        * @description 最外层容器的背景图片样式
        */
-      styleLayoutMainGroup () {
-        return {
-          ...this.themeActiveSetting.backgroundImage ? {
-            backgroundImage: `url('${this.$baseUrl}${this.themeActiveSetting.backgroundImage}')`
-          } : {}
+        styleLayoutMainGroup () {
+            return {
+                ...this.themeActiveSetting.backgroundImage ? {
+                    backgroundImage: `url('${this.$baseUrl}${this.themeActiveSetting.backgroundImage}')`
+                } : {}
+            }
         }
-      }
     },
     methods: {
-      ...mapActions('d2admin/menu', [
-        'asideCollapseToggle'
-      ]),
-      /**
+        ...mapActions('d2admin/menu', [
+            'asideCollapseToggle'
+        ]),
+        /**
        * 接收点击切换侧边栏的按钮
        */
-      handleToggleAside () {
-        this.asideCollapseToggle()
-      }
+        handleToggleAside () {
+            this.asideCollapseToggle()
+        }
     }
-  }
+}
 </script>
 
 <style lang="scss">

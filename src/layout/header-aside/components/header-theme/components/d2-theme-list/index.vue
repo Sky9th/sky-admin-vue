@@ -40,33 +40,33 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
-  export default {
+export default {
     name: 'd2-theme-list',
     data () {
-      return {
-        table: {
-          showHeader: false,
-          border: true
+        return {
+            table: {
+                showHeader: false,
+                border: true
+            }
         }
-      }
     },
     computed: {
-      ...mapState('d2admin/theme', [
-        'list',
-        'activeName'
-      ])
+        ...mapState('d2admin/theme', [
+            'list',
+            'activeName'
+        ])
     },
     methods: {
-      ...mapActions('d2admin/theme', [
-        'set'
-      ]),
-      handleSelectTheme (name) {
-        this.set(name)
-      }
+        ...mapActions('d2admin/theme', [
+            'set'
+        ]),
+        handleSelectTheme (name) {
+            this.set(name)
+        }
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>

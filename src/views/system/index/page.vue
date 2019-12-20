@@ -29,22 +29,22 @@
 </template>
 
 <script>
-  import D2Badge from './components/d2-badge'
-  import D2Help from './components/d2-help'
-  import D2PageCover from './components/d2-page-cover'
+import D2Badge from './components/d2-badge'
+import D2Help from './components/d2-help'
+import D2PageCover from './components/d2-page-cover'
 
-  export default {
+export default {
     components: {
-      D2Badge,
-      D2Help,
-      D2PageCover
+        D2Badge,
+        D2Help,
+        D2PageCover
     },
     data () {
-      return {
-        filename: __filename
-      }
+        return {
+            filename: __filename
+        }
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>
