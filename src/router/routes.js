@@ -46,13 +46,13 @@ const frameIn = [
                 component: _import('system/function/redirect')
             },
             {
-                path: 'page3',
+                path: '/module',
                 name: 'page3',
                 meta: {
                     title: '页面 3',
                     auth: true
                 },
-                component: _import('demo/page3')
+                component: _import('system/module/index')
             }
         ]
     }

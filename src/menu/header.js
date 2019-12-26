@@ -2,12 +2,13 @@
 export default [
     { path: '/index', title: '首页', icon: 'home' },
     {
-        title: '页面',
+        title: '系统管理',
         icon: 'folder-o',
         children: [
-            { path: '/page1', title: '页面 1' },
-            { path: '/page2', title: '页面 2' },
-            { path: '/page3', title: '页面 3' }
+            { path: '/log', title: '系统日志' },
+            { path: '/module', title: '系统功能' },
+            { path: '/admin', title: '管理人员' },
+            { path: '/role', title: '权限分组' }
         ]
     }
 ]

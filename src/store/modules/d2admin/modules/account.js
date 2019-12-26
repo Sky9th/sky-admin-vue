@@ -6,13 +6,13 @@ import { AccountLogin } from '@api/sys.login'
 export default {
     namespaced: true,
     actions: {
-    /**
-     * @description 登录
-     * @param {Object} context
-     * @param {Object} payload username {String} 用户账号
-     * @param {Object} payload password {String} 密码
-     * @param {Object} payload route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
-     */
+        /**
+         * @description 登录
+         * @param {Object} context
+         * @param {Object} payload username {String} 用户账号
+         * @param {Object} payload password {String} 密码
+         * @param {Object} payload route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
+         */
         login ({ dispatch }, {
             username = '',
             password = ''
@@ -29,8 +29,7 @@ export default {
                         // uuid 是用户身份唯一标识 用户注册的时候确定 并且不可改变 不可重复
                         // token 代表用户当前登录状态 建议在网络请求中携带 token
                         // 如有必要 token 需要定时更新，默认保存一天
-                        util.cookies.set('uuid', res.uuid)
-                        util.cookies.set('token', res.token)
+                        util.cookies.set('sessionKey', res.sessionKey)
                         // 设置 vuex 用户信息
                         await dispatch('d2admin/user/set', {
                             name: res.name
@@ -47,14 +46,14 @@ export default {
             })
         },
         /**
-     * @description 注销用户并返回登录页面
-     * @param {Object} context
-     * @param {Object} payload confirm {Boolean} 是否需要确认
-     */
+         * @description 注销用户并返回登录页面
+         * @param {Object} context
+         * @param {Object} payload confirm {Boolean} 是否需要确认
+         */
         logout ({ commit, dispatch }, { confirm = false } = {}) {
             /**
-       * @description 注销
-       */
+             * @description 注销
+             */
             async function logout () {
                 // 删除cookie
                 util.cookies.remove('token')
@@ -88,9 +87,9 @@ export default {
             }
         },
         /**
-     * @description 用户登录后从持久化数据加载一系列的设置
-     * @param {Object} context
-     */
+         * @description 用户登录后从持久化数据加载一系列的设置
+         * @param {Object} context
+         */
         load ({ dispatch }) {
             return new Promise(async resolve => {
                 // DB -> store 加载用户名
