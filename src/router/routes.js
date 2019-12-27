@@ -49,7 +49,7 @@ const frameIn = [
                 path: '/module',
                 name: 'page3',
                 meta: {
-                    title: '页面 3',
+                    title: '系统管理',
                     auth: true
                 },
                 component: _import('system/module/index')
