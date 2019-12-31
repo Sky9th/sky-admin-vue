@@ -1,10 +1,9 @@
-import api from '@api/sys.module'
+import { add } from '@api/sys.module'
 
 export default {
     namespaced: true,
     actions: {
         add ({ dispatch }, data = {}) {
-            api.add()
         }
     }
 }

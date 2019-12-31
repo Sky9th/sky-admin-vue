@@ -1,9 +1,9 @@
 <template>
     <d2-container better-scroll>
         <template slot="header">
-            <el-button type="primary" icon="el-icon-refresh"></el-button>
-            <el-button type="success" icon="el-icon-plus" @click="visibleForm = true">添加</el-button>
-            <el-button type="danger" icon="el-icon-delete">删除</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-refresh"></el-button>
+            <el-button type="success" size="mini" icon="el-icon-plus" @click="visibleForm = true">添加</el-button>
+            <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>
         </template>
 
         <el-table
