@@ -1,8 +1,8 @@
 import store from '@/store'
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message, Loading } from 'element-ui'
 import util from '@/libs/util'
-import he from 'element-ui/src/locale/lang/he'
+// import he from 'element-ui/src/locale/lang/he'
 
 // 创建一个错误
 function errorCreate (msg) {
@@ -50,6 +50,7 @@ service.interceptors.request.use(
         config.headers['X-Requested-With'] = 'XMLHttpRequest'
         let param = util.encrypt.getSignatureParam()
         config.headers = Object.assign(config.headers, param)
+        config.loading = Loading.service()
         return config
     },
     error => {
@@ -62,7 +63,8 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
     response => {
-    // dataAxios 是 axios 返回数据中的 data
+        response.config.loading.close()
+        // dataAxios 是 axios 返回数据中的 data
         const dataAxios = response.data
         // 这个状态码是和后端约定的
         const { code } = dataAxios
@@ -88,6 +90,7 @@ service.interceptors.response.use(
         }
     },
     error => {
+        error.config.loading.close()
         if (error && error.response) {
             switch (error.response.status) {
             case 400:
