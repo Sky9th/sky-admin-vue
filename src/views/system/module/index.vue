@@ -1,5 +1,5 @@
 <template>
-    <d2-container better-scroll>
+    <d2-container>
 
         <template slot="header">
             <el-button type="primary" icon="el-icon-refresh" @click="show"></el-button>
@@ -41,18 +41,6 @@
             </el-table-column>
         </el-table>
 
-        <template slot="footer">
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="data.current_page"
-                    :page-sizes="[15, 30, 50, 100]"
-                    :page-size="15"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="data.total">
-            </el-pagination>
-        </template>
-
         <el-dialog :visible.sync="visibleForm">
             <el-form :model="form"  label-width="100px">
                 <el-form-item label="名称">
@@ -83,6 +71,18 @@
             </span>
         </el-dialog>
 
+        <template slot="footer">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="data.current_page"
+                    :page-sizes="[15, 30, 50, 100]"
+                    :page-size="15"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="data.total">
+            </el-pagination>
+        </template>
+
     </d2-container>
 </template>
 
@@ -102,6 +102,7 @@ export default {
     },
     methods: {
         handleSizeChange (val) {
+            console.log(`每页 ${val} 条`)
             console.log(`每页 ${val} 条`)
         },
         handleCurrentChange (val) {
