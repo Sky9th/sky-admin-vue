@@ -44,15 +44,6 @@ const frameIn = [
                 name: 'redirect',
                 hidden: true,
                 component: _import('system/function/redirect')
-            },
-            {
-                path: '/module',
-                name: 'page3',
-                meta: {
-                    title: '系统管理',
-                    auth: true
-                },
-                component: _import('system/module/index')
             }
         ]
     }

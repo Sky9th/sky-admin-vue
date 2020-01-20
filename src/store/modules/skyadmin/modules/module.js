@@ -1,4 +1,4 @@
-import module from '@api/sys.module'
+import module from '@api/sys/module'
 import { Message, MessageBox } from 'element-ui'
 
 export default {

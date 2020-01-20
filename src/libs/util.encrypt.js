@@ -1,4 +1,5 @@
 import JSEncrypt from 'jsencrypt'
+import util from '@/libs/util'
 
 const encrypt = {}
 
@@ -30,8 +31,8 @@ encrypt.getSignatureParam = () => {
     return {
         Signature: signature,
         Timestamp: timestamp,
-        NonceStr: nonceStr
-        // SessionKey: cache.get('sessionKey')
+        NonceStr: nonceStr,
+        'Session-Key': util.cookies.get('sessionKey')
     }
 }
 
