@@ -8,7 +8,7 @@ const isKeepAlive = data => get(data, 'meta.cache', false)
 export default {
     namespaced: true,
     state: {
-    // 可以在多页 tab 模式下显示的页面
+        // 可以在多页 tab 模式下显示的页面
         pool: [],
         // 当前显示的多页面列表
         opened: setting.page.opened,
@@ -20,10 +20,10 @@ export default {
         keepAlive: []
     },
     actions: {
-    /**
-     * @description 确认已经加载多标签页数据 https://github.com/d2-projects/d2-admin/issues/201
-     * @param {Object} context
-     */
+        /**
+         * @description 确认已经加载多标签页数据 https://github.com/d2-projects/d2-admin/issues/201
+         * @param {Object} context
+         */
         isLoaded ({ state }) {
             if (state.openedLoaded) return Promise.resolve()
             return new Promise(resolve => {
@@ -35,10 +35,10 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 从持久化数据载入标签页列表
-     * @param {Object} context
-     */
+         * @class opened
+         * @description 从持久化数据载入标签页列表
+         * @param {Object} context
+         */
         openedLoad ({ state, commit, dispatch }) {
             return new Promise(async resolve => {
                 // store 赋值
@@ -77,9 +77,9 @@ export default {
             })
         },
         /**
-     * 将 opened 属性赋值并持久化 在这之前请先确保已经更新了 state.opened
-     * @param {Object} context
-     */
+         * 将 opened 属性赋值并持久化 在这之前请先确保已经更新了 state.opened
+         * @param {Object} context
+         */
         opened2db ({ state, dispatch }) {
             return new Promise(async resolve => {
                 // 设置数据
@@ -94,11 +94,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 更新页面列表上的某一项
-     * @param {Object} context
-     * @param {Object} payload { index, params, query, fullPath } 路由信息
-     */
+         * @class opened
+         * @description 更新页面列表上的某一项
+         * @param {Object} context
+         * @param {Object} payload { index, params, query, fullPath } 路由信息
+         */
         openedUpdate ({ state, commit, dispatch }, { index, params, query, fullPath }) {
             return new Promise(async resolve => {
                 // 更新页面列表某一项
@@ -114,11 +114,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 重排页面列表上的某一项
-     * @param {Object} context
-     * @param {Object} payload { oldIndex, newIndex } 位置信息
-     */
+         * @class opened
+         * @description 重排页面列表上的某一项
+         * @param {Object} context
+         * @param {Object} payload { oldIndex, newIndex } 位置信息
+         */
         openedSort ({ state, commit, dispatch }, { oldIndex, newIndex }) {
             return new Promise(async resolve => {
                 // 重排页面列表某一项
@@ -132,11 +132,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 新增一个 tag (打开一个页面)
-     * @param {Object} context
-     * @param {Object} payload new tag info
-     */
+         * @class opened
+         * @description 新增一个 tag (打开一个页面)
+         * @param {Object} context
+         * @param {Object} payload new tag info
+         */
         add ({ state, commit, dispatch }, { tag, params, query, fullPath }) {
             return new Promise(async resolve => {
                 // 设置新的 tag 在新打开一个以前没打开过的页面时使用
@@ -157,11 +157,11 @@ export default {
             })
         },
         /**
-     * @class current
-     * @description 打开一个新的页面
-     * @param {Object} context
-     * @param {Object} payload 从路由钩子的 to 对象上获取 { name, params, query, fullPath } 路由信息
-     */
+         * @class current
+         * @description 打开一个新的页面
+         * @param {Object} context
+         * @param {Object} payload 从路由钩子的 to 对象上获取 { name, params, query, fullPath } 路由信息
+         */
         open ({ state, commit, dispatch }, { name, params, query, fullPath }) {
             return new Promise(async resolve => {
                 // 已经打开的页面
@@ -200,11 +200,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 关闭一个 tag (关闭一个页面)
-     * @param {Object} context
-     * @param {Object} payload { tagName: 要关闭的标签名字 }
-     */
+         * @class opened
+         * @description 关闭一个 tag (关闭一个页面)
+         * @param {Object} context
+         * @param {Object} payload { tagName: 要关闭的标签名字 }
+         */
         close ({ state, commit, dispatch }, { tagName }) {
             return new Promise(async resolve => {
                 // 下个新的页面
@@ -250,11 +250,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 关闭当前标签左边的标签
-     * @param {Object} context
-     * @param {Object} payload { pageSelect: 当前选中的tagName }
-     */
+         * @class opened
+         * @description 关闭当前标签左边的标签
+         * @param {Object} context
+         * @param {Object} payload { pageSelect: 当前选中的tagName }
+         */
         closeLeft ({ state, commit, dispatch }, { pageSelect } = {}) {
             return new Promise(async resolve => {
                 const pageAim = pageSelect || state.current
@@ -279,11 +279,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 关闭当前标签右边的标签
-     * @param {Object} context
-     * @param {Object} payload { pageSelect: 当前选中的tagName }
-     */
+         * @class opened
+         * @description 关闭当前标签右边的标签
+         * @param {Object} context
+         * @param {Object} payload { pageSelect: 当前选中的tagName }
+         */
         closeRight ({ state, commit, dispatch }, { pageSelect } = {}) {
             return new Promise(async resolve => {
                 const pageAim = pageSelect || state.current
@@ -307,11 +307,11 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 关闭当前激活之外的 tag
-     * @param {Object} context
-     * @param {Object} payload { pageSelect: 当前选中的tagName }
-     */
+         * @class opened
+         * @description 关闭当前激活之外的 tag
+         * @param {Object} context
+         * @param {Object} payload { pageSelect: 当前选中的tagName }
+         */
         closeOther ({ state, commit, dispatch }, { pageSelect } = {}) {
             return new Promise(async resolve => {
                 const pageAim = pageSelect || state.current
@@ -340,10 +340,10 @@ export default {
             })
         },
         /**
-     * @class opened
-     * @description 关闭所有 tag
-     * @param {Object} context
-     */
+         * @class opened
+         * @description 关闭所有 tag
+         * @param {Object} context
+         */
         closeAll ({ state, commit, dispatch }) {
             return new Promise(async resolve => {
                 // 删除打开的页面 并在缓存设置中删除
@@ -362,19 +362,19 @@ export default {
         }
     },
     mutations: {
-    /**
-     * @class keepAlive
-     * @description 从已经打开的页面记录中更新需要缓存的页面记录
-     * @param {Object} state state
-     */
+        /**
+         * @class keepAlive
+         * @description 从已经打开的页面记录中更新需要缓存的页面记录
+         * @param {Object} state state
+         */
         keepAliveRefresh (state) {
             state.keepAlive = state.opened.filter(item => isKeepAlive(item)).map(e => e.name)
         },
         /**
-     * @description 删除一个页面的缓存设置
-     * @param {Object} state state
-     * @param {String} name name
-     */
+         * @description 删除一个页面的缓存设置
+         * @param {Object} state state
+         * @param {String} name name
+         */
         keepAliveRemove (state, name) {
             const list = [...state.keepAlive]
             const index = list.findIndex(item => item === name)
@@ -385,37 +385,37 @@ export default {
             }
         },
         /**
-     * @description 增加一个页面的缓存设置
-     * @param {Object} state state
-     * @param {String} name name
-     */
+         * @description 增加一个页面的缓存设置
+         * @param {Object} state state
+         * @param {String} name name
+         */
         keepAlivePush (state, name) {
             const keep = [...state.keepAlive]
             keep.push(name)
             state.keepAlive = keep
         },
         /**
-     * @description 清空页面缓存设置
-     * @param {Object} state state
-     */
+         * @description 清空页面缓存设置
+         * @param {Object} state state
+         */
         keepAliveClean (state) {
             state.keepAlive = []
         },
         /**
-     * @class current
-     * @description 设置当前激活的页面 fullPath
-     * @param {Object} state state
-     * @param {String} fullPath new fullPath
-     */
+         * @class current
+         * @description 设置当前激活的页面 fullPath
+         * @param {Object} state state
+         * @param {String} fullPath new fullPath
+         */
         currentSet (state, fullPath) {
             state.current = fullPath
         },
         /**
-     * @class pool
-     * @description 保存 pool (候选池)
-     * @param {Object} state state
-     * @param {Array} routes routes
-     */
+         * @class pool
+         * @description 保存 pool (候选池)
+         * @param {Object} state state
+         * @param {Array} routes routes
+         */
         init (state, routes) {
             const pool = []
             const push = function (routes) {

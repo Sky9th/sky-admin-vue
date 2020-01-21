@@ -20,7 +20,7 @@ function supplementMenuPath (menu) {
 export default {
     namespaced: true,
     state: {
-    // 顶栏菜单
+        // 顶栏菜单
         header: [],
         // 侧栏菜单
         aside: [],
@@ -28,11 +28,11 @@ export default {
         asideCollapse: setting.menu.asideCollapse
     },
     actions: {
-    /**
-     * 设置侧边栏展开或者收缩
-     * @param {Object} context
-     * @param {Boolean} collapse is collapse
-     */
+        /**
+         * 设置侧边栏展开或者收缩
+         * @param {Object} context
+         * @param {Boolean} collapse is collapse
+         */
         asideCollapseSet ({ state, dispatch }, collapse) {
             return new Promise(async resolve => {
                 // store 赋值
@@ -49,9 +49,9 @@ export default {
             })
         },
         /**
-     * 切换侧边栏展开和收缩
-     * @param {Object} context
-     */
+         * 切换侧边栏展开和收缩
+         * @param {Object} context
+         */
         asideCollapseToggle ({ state, dispatch }) {
             return new Promise(async resolve => {
                 // store 赋值
@@ -68,9 +68,9 @@ export default {
             })
         },
         /**
-     * 从持久化数据读取侧边栏展开或者收缩
-     * @param {Object} context
-     */
+         * 从持久化数据读取侧边栏展开或者收缩
+         * @param {Object} context
+         */
         asideCollapseLoad ({ state, dispatch }) {
             return new Promise(async resolve => {
                 // store 赋值
@@ -86,20 +86,20 @@ export default {
         }
     },
     mutations: {
-    /**
-     * @description 设置顶栏菜单
-     * @param {Object} state state
-     * @param {Array} menu menu setting
-     */
+        /**
+         * @description 设置顶栏菜单
+         * @param {Object} state state
+         * @param {Array} menu menu setting
+         */
         headerSet (state, menu) {
             // store 赋值
             state.header = supplementMenuPath(menu)
         },
         /**
-     * @description 设置侧边栏菜单
-     * @param {Object} state state
-     * @param {Array} menu menu setting
-     */
+         * @description 设置侧边栏菜单
+         * @param {Object} state state
+         * @param {Array} menu menu setting
+         */
         asideSet (state, menu) {
             // store 赋值
             state.aside = supplementMenuPath(menu)

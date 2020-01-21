@@ -34,7 +34,7 @@ const router = new VueRouter({
     routes
 })
 
-let permissionMenu
+let permissionMenu = []
 let permissionRouter = []
 let permission = {
     functions: [],
@@ -52,13 +52,14 @@ const formatRoutes = function (routes) {
 }
 
 const fetchMenuAndRouter = async () => {
+    let userPermissionInfo
     try {
-        let userPermissionInfo = await userApi.getPermissionInfo()
+        userPermissionInfo = await userApi.getPermissionInfo()
         permissionMenu = userPermissionInfo.accessMenus
         permissionRouter = userPermissionInfo.accessRoutes
         permission.functions = userPermissionInfo.userPermissions
         permission.roles = userPermissionInfo.userRoles
-        permission.interfaces = util.formatInterfaces(userPermissionInfo.accessInterfaces)
+        permission.interfaces = util.formatInterfaces(userPermissionInfo.accessApi)
         permission.isAdmin = userPermissionInfo.isAdmin === 1
     } catch (ex) {
         console.log(ex)
@@ -74,14 +75,14 @@ const fetchMenuAndRouter = async () => {
     // 设置顶栏菜单
     store.commit('d2admin/menu/headerSet', allMenuHeader)
     // 设置侧边栏菜单
-    store.commit('d2admin/menu/fullAsideSet', allMenuAside)
+    store.commit('d2admin/menu/asideSet', allMenuAside)
     // 初始化菜单搜索功能
     store.commit('d2admin/search/init', allMenuHeader)
     // 设置权限信息
     store.commit('d2admin/permission/set', permission)
     // 加载上次退出时的多页列表
     store.dispatch('d2admin/page/openedLoad')
-    await Promise.resolve()
+    return userPermissionInfo
 }
 
 // 免校验token白名单
@@ -109,8 +110,8 @@ router.beforeEach(async (to, from, next) => {
         if (sessionKey) {
             // 拉取权限信息
             if (!isFetchPermissionInfo) {
-                await fetchMenuAndRouter()
-                isFetchPermissionInfo = true
+                let res = await fetchMenuAndRouter()
+                if (res.userName) { isFetchPermissionInfo = true }
                 next(to.path, true)
             } else {
                 next()
