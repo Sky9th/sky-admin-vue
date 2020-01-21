@@ -100,7 +100,6 @@ router.beforeEach(async (to, from, next) => {
     await store.dispatch('d2admin/size/isLoaded')
     // 进度条
     NProgress.start()
-
     // 关闭搜索面板
     store.commit('d2admin/search/set', false)
     const sessionKey = util.cookies.get('sessionKey')

@@ -2,6 +2,7 @@ import store from '@/store'
 import axios from 'axios'
 import { Message, Loading } from 'element-ui'
 import util from '@/libs/util'
+import router from '@/router'
 // import he from 'element-ui/src/locale/lang/he'
 
 // 创建一个错误
@@ -98,6 +99,9 @@ service.interceptors.response.use(
                 break
             case 401:
                 error.message = '未授权，请登录'
+                util.cookies.remove('sessionKey')
+                util.cookies.set('redirect', router.currentRoute.fullPath)
+                router.push('/login')
                 break
             case 403:
                 error.message = '拒绝访问'
