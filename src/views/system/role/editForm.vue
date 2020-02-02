@@ -13,7 +13,7 @@
 
       <el-form-item>
         <el-button type="primary" :loading="loading" @click="saveRole">保存</el-button>
-        <el-button @click="close">取消</el-button>
+        <el-button @click="dialogClose">取消</el-button>
       </el-form-item>
     </el-form>
 
@@ -79,9 +79,6 @@ export default {
                     return false
                 }
             })
-        },
-        close () {
-            this.dialogClose()
         },
         dialogClose () {
             this.$refs['form'].resetFields()
