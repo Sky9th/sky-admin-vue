@@ -1,5 +1,6 @@
 import cookies from './util.cookies'
 import db from './util.db'
+import format from './util.format'
 import log from './util.log'
 import encrypt from './util.encrypt'
 import { parse } from 'matchit'
@@ -8,7 +9,8 @@ const util = {
     cookies,
     db,
     log,
-    encrypt
+    encrypt,
+    format
 }
 
 /**
