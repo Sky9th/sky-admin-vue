@@ -117,9 +117,9 @@ export default {
                 per_page: this.page.per_page,
                 order: this.sort.prop,
                 descending: this.sort.order === 'descending',
-                filter: { ...this.searchForm, role_id: this.role.id }
+                filter: { ...this.searchForm }
             }
-            userService.indexByRoleId(query).then(data => {
+            userService.indexByRoleId(this.role.id, query).then(data => {
                 let list = data.data
                 for (let i in list) {
                     list[i].isAdd = true

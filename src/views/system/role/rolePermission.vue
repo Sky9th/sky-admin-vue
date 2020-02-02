@@ -16,8 +16,8 @@
 
 </template>
 <script>
-import * as roleService from '@/api/sys/role'
-import * as menuService from '@/api/sys/menu'
+import roleService from '@/api/sys/role'
+import menuService from '@/api/sys/menu'
 export default {
     name: 'rolePermission',
     props: {
@@ -45,9 +45,9 @@ export default {
     },
     methods: {
         async dialogOpen () {
-            this.permissionList = await menuService.getMenuList()
-            let rolePermissions = await roleService.getRolePermissions(this.role.id)
-            let rolePermissionList = rolePermissions.map(s => s.functionId)
+            this.permissionList = await menuService.index()
+            let rolePermissions = await menuService.indexByRoleId(this.role.id)
+            let rolePermissionList = rolePermissions.map(s => s.id)
             this.$refs.tree.setCheckedKeys(rolePermissionList)
         },
         filterNode (value, data) {
