@@ -1,11 +1,11 @@
 <template>
   <el-dialog title="角色信息" :visible.sync="dialogVisible" @opened="dialogOpen" @closed="dialogClose">
     <el-form ref="form" :model="form" label-width="80px" size="small">
-      <el-form-item prop="name" label="角色名称" :rules="[{ required: true, message: '不能为空'}]">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item prop="title" label="角色名称" :rules="[{ required: true, message: '不能为空'}]">
+        <el-input v-model="form.title"></el-input>
       </el-form-item>
-      <el-form-item prop="code" label="角色标识" :rules="[{ required: true, message: '不能为空'}]">
-        <el-input v-model="form.code"></el-input>
+      <el-form-item prop="permission" label="角色标识" :rules="[{ required: true, message: '不能为空'}]">
+        <el-input v-model="form.permission"></el-input>
       </el-form-item>
       <el-form-item label="备注">
         <el-input type="textarea" v-model="form.description"></el-input>
@@ -21,7 +21,7 @@
 
 </template>
 <script>
-import * as roleService from '@/api/sys/role'
+import roleService from '@/api/sys/role'
 export default {
     name: 'roleEditForm',
     props: {
@@ -50,16 +50,15 @@ export default {
     methods: {
         dialogOpen () {
             this.$refs.form.resetFields()
+            this.form = {}
             if (this.role.id) {
-                roleService.getRole(this.role.id).then(data => {
+                roleService.read(this.role.id).then(data => {
                     let form = {}
-                    form.name = data.name
-                    form.code = data.code
+                    form.title = data.title
+                    form.permission = data.permission
                     form.description = data.description
                     this.form = form
                 })
-            } else {
-                this.form = {}
             }
         },
         saveRole () {
@@ -67,11 +66,14 @@ export default {
                 if (valid) {
                     this.loading = true
                     roleService
-                        .saveRole({ ...this.form, id: this.role.id })
+                        .save({ ...this.form, id: this.role.id })
                         .then(data => {
                             this.loading = false
                             this.dialogVisible = false
                             this.$emit('submit')
+                        }).catch(err => {
+                            console.log(err)
+                            this.loading = false
                         })
                 } else {
                     return false
