@@ -16,6 +16,12 @@ const api = {
     },
     del (id) {
         return request.delete('roles/' + id)
+    },
+    savePermission (data) {
+        return request.post('role/savePermission', data)
+    },
+    modifyUser (data) {
+        return request.post('role/modifyUser', data)
     }
 }
 

@@ -38,7 +38,8 @@ function errorLog (error) {
 // 创建一个 axios 实例
 const service = axios.create({
     baseURL: process.env.VUE_APP_API,
-    timeout: 5000 // 请求超时时间
+    timeout: 5000, // 请求超时时间
+    loading: false
 })
 
 // 请求拦截器
@@ -51,7 +52,7 @@ service.interceptors.request.use(
         config.headers['X-Requested-With'] = 'XMLHttpRequest'
         let param = util.encrypt.getSignatureParam()
         config.headers = Object.assign(config.headers, param)
-        config.loading = Loading.service()
+        if (config.loading) { config.loadingIns = Loading.service() }
         return config
     },
     error => {
@@ -64,7 +65,7 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
     response => {
-        response.config.loading.close()
+        if (response.config.loading) { response.config.loadingIns.close() }
         // dataAxios 是 axios 返回数据中的 data
         const dataAxios = response.data
         // 这个状态码是和后端约定的
@@ -91,7 +92,7 @@ service.interceptors.response.use(
         }
     },
     error => {
-        error.config.loading.close()
+        if (error.config.loading) { error.config.loadingIns.close() }
         if (error && error.response) {
             switch (error.response.status) {
             case 400:

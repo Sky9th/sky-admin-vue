@@ -2,13 +2,13 @@
   <el-dialog title="角色信息" :visible.sync="dialogVisible" @opened="dialogOpen" @closed="dialogClose">
     <el-form ref="form" :model="form" label-width="80px" size="small">
       <el-form-item prop="title" label="角色名称" :rules="[{ required: true, message: '不能为空'}]">
-        <el-input v-model="form.title"></el-input>
+        <el-input v-model="form.title"/>
       </el-form-item>
       <el-form-item prop="permission" label="角色标识" :rules="[{ required: true, message: '不能为空'}]">
-        <el-input v-model="form.permission"></el-input>
+        <el-input v-model="form.permission"/>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input type="textarea" v-model="form.description"></el-input>
+        <el-input type="textarea" v-model="form.description"/>
       </el-form-item>
 
       <el-form-item>

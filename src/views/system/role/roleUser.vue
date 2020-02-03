@@ -5,12 +5,12 @@
             用户
         </div>
         <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini" style="margin-bottom: -18px;">
-            <el-form-item label="名称" prop="username">
-                <el-input v-model="searchForm.username" placeholder="名称" style="width: 100px;"/>
+            <el-form-item label="用户名" prop="username">
+                <el-input v-model="searchForm.username" placeholder="用户名" style="width: 100px;"/>
             </el-form-item>
 
-            <el-form-item label="邮箱" prop="email">
-                <el-input v-model="searchForm.email" placeholder="邮箱" style="width: 120px;"/>
+            <el-form-item label="姓名" prop="realname">
+                <el-input v-model="searchForm.realname" placeholder="姓名" style="width: 120px;"/>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="handleSearchFormSubmit">
@@ -46,16 +46,16 @@
             </el-table-column>
             <el-table-column label="状态" prop="isAdd">
                 <template slot-scope="scope">
-                    <el-tag v-if="scope.row.isAdd==2" size="mini" type="info">未添加</el-tag>
-                    <el-tag v-if="scope.row.isAdd==1" size="mini" type="success">已添加</el-tag>
+                    <el-tag v-if="scope.row.isAdd === false" size="mini" type="info">未添加</el-tag>
+                    <el-tag v-if="scope.row.isAdd === true" size="mini" type="success">已添加</el-tag>
                 </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作" align="center">
                 <template slot-scope="scope">
-                    <el-button v-if="scope.row.isAdd==2" type="primary" title="添加" size="mini" icon="el-icon-plus"
-                               circle @click="modifyRoleUser(scope.row.id,1)"></el-button>
-                    <el-button v-if="scope.row.isAdd==1" type="danger" title="移除" size="mini" icon="el-icon-minus"
-                               circle @click="modifyRoleUser(scope.row.id,0)"></el-button>
+                    <el-button v-if="scope.row.isAdd === false" type="primary" title="添加" size="mini" icon="el-icon-plus"
+                               circle @click="modifyRoleUser(scope.row.id,1)"/>
+                    <el-button v-if="scope.row.isAdd === true" type="danger" title="移除" size="mini" icon="el-icon-minus"
+                               circle @click="modifyRoleUser(scope.row.id,0)"/>
                 </template>
             </el-table-column>
 
@@ -70,6 +70,7 @@
 </template>
 <script>
 import userService from '@/api/sys/user'
+import roleService from '@/api/sys/role'
 
 export default {
     name: 'roleUser',
@@ -148,21 +149,23 @@ export default {
             this.getTableData()
         },
         modifyRoleUser (userId, action) {
-            userService
-                .editRoleUser({
-                    roleId: this.role.id,
-                    userId: userId,
-                    action: action
+            roleService.modifyUser({
+                role_id: this.role.id,
+                user_id: userId,
+                action: action
+            }).then(() => {
+                let msg = action === 1 ? '已添加' : '已移除'
+                this.$notify({
+                    title: '操作成功',
+                    message: msg,
+                    type: 'success'
                 })
-                .then(() => {
-                    let msg = action == 1 ? '已添加' : '已移除'
-                    this.$notify({
-                        title: '操作成功',
-                        message: msg,
-                        type: 'success'
-                    })
-                    this.getTableData()
-                })
+                for (let i in this.tableData) {
+                    if (this.tableData[i].id === userId) {
+                        this.tableData[i].isAdd = !action
+                    }
+                }
+            })
         }
     }
 }

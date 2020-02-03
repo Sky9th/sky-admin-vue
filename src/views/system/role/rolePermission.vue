@@ -1,7 +1,7 @@
 <template>
   <el-dialog :visible.sync="dialogVisible" @open="dialogOpen">
     <div slot="title">维护
-      <el-tag>{{role.name}}</el-tag>权限</div>
+      <el-tag>{{role.title}}</el-tag>权限</div>
     <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText" style="padding-bottom: 5px;"></el-input>
     <el-tree ref="tree" show-checkbox check-on-click-node default-expand-all :props="{label: 'title'}" highlight-current node-key="id" :data="permissionList" :filter-node-method="filterNode" :expand-on-click-node="false">
       <span slot-scope="{ node, data }">
@@ -58,16 +58,18 @@ export default {
             let checkedNodes = this.$refs.tree.getCheckedNodes(true, false)
             let checkedPermissins = []
             for (let checked of checkedNodes) {
-                checked.type == 2 && checkedPermissins.push(checked.id)
+                checkedPermissins.push(checked.id)
             }
             let data = {
-                roleId: this.role.id,
+                role_id: this.role.id,
                 permissions: checkedPermissins
             }
             this.loading = true
             roleService.savePermission(data).then(data => {
                 this.loading = false
                 this.dialogVisible = false
+            }).catch(err => {
+                this.loading = false
             })
         },
         close () {
