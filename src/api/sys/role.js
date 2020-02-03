@@ -4,6 +4,9 @@ const api = {
     index (query) {
         return request.get('roles', { params: query })
     },
+    indexByUserId (userId, query) {
+        return request.get('role/indexByUserId/' + userId, { params: query })
+    },
     read (id) {
         return request.get('roles/' + id)
     },

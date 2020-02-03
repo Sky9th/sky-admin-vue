@@ -60,13 +60,13 @@
             <el-table-column fixed="right" label="操作" align="center">
                 <template slot-scope="scope">
                     <el-button type="primary" title="编辑" size="mini" icon="el-icon-edit" circle
-                               @click="openEditForm(scope.row)"></el-button>
+                               @click="openEditForm(scope.row)" />
                     <el-button type="danger" title="删除" size="mini" icon="el-icon-delete" circle
-                               @click="delRole(scope.row.id)"></el-button>
+                               @click="delRole(scope.row.id)" />
                     <el-button type="warning" title="用户列表" size="mini" icon="el-icon-share" circle
-                               @click="openRoleUserDialog(scope.row)"></el-button>
+                               @click="openRoleUserDialog(scope.row)" />
                     <el-button title="权限" size="mini" icon="el-icon-setting" circle
-                               @click="openPermissionDialog(scope.row)"></el-button>
+                               @click="openPermissionDialog(scope.row)" />
                 </template>
             </el-table-column>
 

@@ -1,11 +1,11 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" @open="dialogOpen">
+  <el-dialog :visible.sync="dialogVisible" @open="dialogOpen" @close="close" :destroy-on-close="true">
     <div slot="title">维护
       <el-tag>{{role.title}}</el-tag>权限</div>
-    <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText" style="padding-bottom: 5px;"></el-input>
+    <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText" style="padding-bottom: 5px;" />
     <el-tree ref="tree" show-checkbox check-on-click-node default-expand-all :props="{label: 'title'}" highlight-current node-key="id" :data="permissionList" :filter-node-method="filterNode" :expand-on-click-node="false">
       <span slot-scope="{ node, data }">
-        <i v-if="data.type==2" class="fa fa-cog"></i>&nbsp;{{ node.label }}
+        <i v-if="data.type === 2" class="fa fa-cog" />&nbsp;{{ node.label }}
       </span>
     </el-tree>
     <div slot="footer" class="dialog-footer">
@@ -63,16 +63,18 @@ export default {
             let data = {
                 role_id: this.role.id,
                 permissions: checkedPermissins
-            }
+            };
             this.loading = true
             roleService.savePermission(data).then(data => {
                 this.loading = false
                 this.dialogVisible = false
+                // eslint-disable-next-line handle-callback-err
             }).catch(err => {
                 this.loading = false
             })
         },
         close () {
+            this.tableData = []
             this.dialogVisible = false
         }
     }

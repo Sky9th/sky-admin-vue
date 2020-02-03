@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="dialogVisible" @open="dialogOpen">
+    <el-dialog :visible.sync="dialogVisible" @open="dialogOpen" @close="close" :destroy-on-close="true">
         <div slot="title">维护
             <el-tag>{{role.title}}</el-tag>
             用户
@@ -46,15 +46,15 @@
             </el-table-column>
             <el-table-column label="状态" prop="isAdd">
                 <template slot-scope="scope">
-                    <el-tag v-if="scope.row.isAdd === false" size="mini" type="info">未添加</el-tag>
-                    <el-tag v-if="scope.row.isAdd === true" size="mini" type="success">已添加</el-tag>
+                    <el-tag v-if="!scope.row.role_id" size="mini" type="info">未添加</el-tag>
+                    <el-tag v-else size="mini" type="success">已添加</el-tag>
                 </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作" align="center">
                 <template slot-scope="scope">
-                    <el-button v-if="scope.row.isAdd === false" type="primary" title="添加" size="mini" icon="el-icon-plus"
+                    <el-button v-if="!scope.row.role_id" type="primary" title="添加" size="mini" icon="el-icon-plus"
                                circle @click="modifyRoleUser(scope.row.id,1)"/>
-                    <el-button v-if="scope.row.isAdd === true" type="danger" title="移除" size="mini" icon="el-icon-minus"
+                    <el-button v-else type="danger" title="移除" size="mini" icon="el-icon-minus"
                                circle @click="modifyRoleUser(scope.row.id,0)"/>
                 </template>
             </el-table-column>
@@ -121,11 +121,7 @@ export default {
                 filter: { ...this.searchForm }
             }
             userService.indexByRoleId(this.role.id, query).then(data => {
-                let list = data.data
-                for (let i in list) {
-                    list[i].isAdd = true
-                }
-                this.tableData = list
+                this.tableData = data.data
                 this.page.total = data.total
             })
         },
@@ -160,12 +156,11 @@ export default {
                     message: msg,
                     type: 'success'
                 })
-                for (let i in this.tableData) {
-                    if (this.tableData[i].id === userId) {
-                        this.tableData[i].isAdd = !action
-                    }
-                }
+                this.getTableData()
             })
+        },
+        close () {
+            this.tableData = []
         }
     }
 }
