@@ -31,7 +31,19 @@ module.exports = {
     publicPath,
     lintOnSave: true,
     devServer: {
-        publicPath // 和 publicPath 保持一致
+        publicPath, // 和 publicPath 保持一致
+        proxy: {
+            '/admin': {
+                // 要访问的跨域的域名
+                target: 'http://sky-admin.sky9th.cn/admin',
+                ws: true,
+                secure: false, // 使用的是http协议则设置为false，https协议则设置为true
+                changOrigin: true,
+                pathRewrite: {
+                    '^/admin': ''
+                }
+            }
+        }
     },
     css: {
         loaderOptions: {
