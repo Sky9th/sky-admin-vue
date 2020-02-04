@@ -6,7 +6,7 @@
         </div>
         <textarea ref="textarea"/>
         <div slot="footer">
-            <el-button type="primary" :loading="loading" @click="save">保存</el-button>
+            <el-button type="primary" :loading="loading" @click="save" disabled>保存</el-button>
             <el-button @click="close">取消</el-button>
         </div>
     </el-dialog>
