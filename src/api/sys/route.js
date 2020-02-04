@@ -1,9 +1,6 @@
 import request from '@/plugin/axios'
+import { resource } from '../resource'
 
-const api = {
-    index () {
-        return request.get('routes')
-    }
-}
+const api = resource('routes')
 
 export default api
