@@ -1,12 +1,6 @@
 import request from '@/plugin/axios'
+import { resource } from '@/api/resource'
 
-const api = {
-    index () {
-        return request.get('menus')
-    },
-    indexByRoleId (id) {
-        return request.get('menu/indexByRoleId/' + id)
-    }
-}
+const api = resource('menus')
 
 export default api

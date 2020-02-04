@@ -6,14 +6,14 @@
         </div>
         <textarea ref="textarea" />
         <div slot="footer">
-            <el-button type="primary" :loading="loading" @click="save">保存</el-button>
+            <el-button type="primary" :loading="loading" disabled @click="save">保存</el-button>
             <el-button @click="close">取消</el-button>
         </div>
     </el-dialog>
 
 </template>
 <script>
-import * as menuService from '@/api/sys/menu'
+import menuService from '@/api/sys/menu'
 import CodeMirror from 'codemirror'
 import 'codemirror/addon/lint/lint.css'
 import 'codemirror/addon/fold/foldgutter.css'
@@ -59,11 +59,12 @@ export default {
                     viewportMargin: Infinity
                 })
             }
-            menuService.getMenuList().then(data => {
+            menuService.index().then(data => {
                 this.jsonEditor.setValue(JSON.stringify(data, null, 2))
             })
         },
         save () {
+            // TODO 批量编辑
             this.dialogVisible = false
             this.$emit('submit')
         },
