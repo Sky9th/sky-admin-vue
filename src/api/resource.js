@@ -2,6 +2,9 @@ import request from '@/plugin/axios'
 
 export function resource (router) {
     return {
+        structure () {
+            return request.get(router + '/structure')
+        },
         index (query) {
             return request.get(router, { params: query })
         },
