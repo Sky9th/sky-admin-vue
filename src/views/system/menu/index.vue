@@ -139,7 +139,7 @@ export default {
         add () {
             this.menuform = {
                 id: 0,
-                parentId: this.currentId
+                pid: this.currentId
             }
             this.formEdit = true
         },
