@@ -1,6 +1,7 @@
 <template>
     <div>
-        <sky-list :api="projectService"></sky-list>
+        <sky-list :api="projectService">
+        </sky-list>
     </div>
 </template>
 <script>

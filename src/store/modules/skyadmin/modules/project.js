@@ -3,14 +3,16 @@ import projectService from '@/api/sky9th/project'
 export default {
     namespaced: true,
     state: {
-        field: [],
+        field: {},
         search: {},
         thead: {},
         form: {}
     },
     actions: {
         async getStructure ({ state, commit }) {
-            if (state.field.length === 0) {
+            console.log(state)
+            let keys = Object.keys(state.field)
+            if (keys.length === 0) {
                 await projectService.structure().then(function (data) {
                     commit('set', data)
                 })
