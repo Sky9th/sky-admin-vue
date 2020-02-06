@@ -3,7 +3,7 @@
         <template slot="header">
             <slot name="header">
                 <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini" style="margin-bottom: -18px;">
-                    <el-form-item :label="structure.field[index]" :prop="item" v-for="(item, index) in structure.search" :key="index">
+                    <el-form-item :label="structure.field[index]" :prop="index" v-for="(item, index) in structure.search" :key="index">
                         <el-input v-if="item === 'input'" v-model="searchForm[index]" style="width: 100px;"/>
                     </el-form-item>
                     <el-form-item>
@@ -38,7 +38,7 @@
                 <el-table-column fixed="right" label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button type="primary" title="编辑" size="mini" icon="el-icon-edit" circle
-                                   @click="openEditForm(scope.row)"/>
+                                   @click="openForm(scope.row)"/>
                         <el-button type="danger" title="删除" size="mini" icon="el-icon-delete" circle
                                    @click="del(scope.row.id)"/>
                     </template>
@@ -55,24 +55,24 @@
             </template>
         </slot>
 
-        <slot name="extend"></slot>
+        <editForm :info="info" :form="structure.form" :field="structure.field" v-model="editFormVisible" @submit="getTableData" :api="api"/>
+
+        <slot name="extend" />
     </d2-container>
 </template>
 <script>
 import { mapState } from 'vuex'
+import editForm from './editForm'
 
 export default {
-    name: 'UserPage',
     props: {
         api: Object
     },
-    components: {},
+    components: { editForm },
     data () {
         return {
-            searchForm: {
-                name: '',
-                email: ''
-            },
+            info: {},
+            searchForm: {},
             // eslint-disable-next-line no-eval
             pageSize: eval(process.env.VUE_APP_PAGE_SIZE),
             loading: false,
@@ -87,9 +87,7 @@ export default {
                 prop: '',
                 order: ''
             },
-            user: {},
-            editFormVisible: false,
-            userRoleDialogVisible: false
+            editFormVisible: false
         }
     },
     computed: mapState({
@@ -143,17 +141,13 @@ export default {
             this.page.current = val
             this.getTableData()
         },
-        openEditForm (user) {
-            this.user = user
+        openForm (info) {
+            this.info = info
             this.editFormVisible = true
         },
         add () {
             this.user = {}
             this.editFormVisible = true
-        },
-        openUserRoleDialog (user) {
-            this.user = user
-            this.userRoleDialogVisible = true
         },
         batchDel () {
             this.$confirm('确认删除？', '确认信息', {
