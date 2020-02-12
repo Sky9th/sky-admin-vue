@@ -1,19 +1,18 @@
-import projectService from '@/api/sky9th/project'
-
-export default {
+const ResourceModule = {
     namespaced: true,
-    state: {
-        field: {},
-        search: {},
-        thead: {},
-        form: {}
+    state () {
+        return {
+            field: {},
+            search: {},
+            thead: {},
+            form: {}
+        }
     },
     actions: {
-        async getStructure ({ state, commit }) {
-            console.log(state)
+        async getStructure ({ state, commit }, service) {
             let keys = Object.keys(state.field)
             if (keys.length === 0) {
-                await projectService.structure().then(function (data) {
+                await service.structure().then(function (data) {
                     commit('set', data)
                 })
             }
@@ -28,3 +27,5 @@ export default {
         }
     }
 }
+
+export default ResourceModule

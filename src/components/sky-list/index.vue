@@ -63,9 +63,11 @@
 <script>
 import { mapState } from 'vuex'
 import editForm from './editForm'
+import resourceModule from './resource'
 
 export default {
     props: {
+        store: String,
         api: Object
     },
     components: { editForm },
@@ -91,17 +93,22 @@ export default {
         }
     },
     computed: mapState({
-        structure: state => {
+        structure (state) {
+            let module = this.store.split('/')
             return {
-                field: state.skyadmin.project.field,
-                form: state.skyadmin.project.form,
-                search: state.skyadmin.project.search,
-                thead: state.skyadmin.project.thead
+                field: state[module[0]][module[1]].field,
+                form: state[module[0]][module[1]].form,
+                search: state[module[0]][module[1]].search,
+                thead: state[module[0]][module[1]].thead
             }
         }
     }),
-    mounted () {
-        this.$store.dispatch('skyadmin/project/getStructure').then(data => {
+    async created () {
+        let module = this.store.split('/')
+        if (!(module[0] in this.$store.state && module[1] in this.$store.state[module[0]])) {
+            await this.$store.registerModule(module, resourceModule)
+        }
+        await this.$store.dispatch(this.store + '/getStructure', this.api).then(data => {
             this.getTableData()
         })
     },
