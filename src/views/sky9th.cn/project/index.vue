@@ -1,6 +1,6 @@
 <template>
     <div>
-        <sky-list :api="projectService">
+        <sky-list store="skyadmin/project" :api="projectService">
         </sky-list>
     </div>
 </template>

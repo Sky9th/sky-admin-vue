@@ -1,8 +1,22 @@
 <template>
-    <d2-container>
-        tech
-    </d2-container>
+    <div>
+        <sky-list store="skyadmin/tech" :api="techService">
+        </sky-list>
+    </div>
 </template>
-
-<style lang="scss" scoped>
-</style>
+<script>
+import skyList from '@/components/sky-list'
+import techService from '@/api/sky9th/tech'
+export default {
+    components: { skyList },
+    data () {
+        return {
+            techService
+        }
+    },
+    mounted () {
+    },
+    methods: {
+    }
+}
+</script>
