@@ -16,7 +16,7 @@ SkyAdmin
 ## 安装
 
 ~~~
-composer install
+npm install
 ~~~
 
 ## 框架 [Vue2.0](https://vuejs.org/)
