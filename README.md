@@ -1,19 +1,31 @@
-[D2Admin](https://github.com/d2-projects/d2-admin) is a fully open source and free enterprise back-end product front-end integration solution, using the latest front-end technology stack, javascript files loading of local first screen less than 60kb, has prepared most of the project preparations, and with a lot of sample code to help the management system agile development.
+SkyAdmin
+===============
 
-[中文](https://github.com/d2-projects/d2-admin-start-kit/blob/master/README.zh.md) | **English**
+### 相关项目
+* [SkyAdminApi](https://github.com/Sky9th/sky-admin-api) PHP后端
+* [SkyAdminVue](https://github.com/Sky9th/sky-admin-vue) Vue2.0前端
 
-## Preview
+## 主要功能
 
-| server | link | server | status |
-| --- | --- | --- | --- |
-| d2.pub | [d2.pub/d2-admin-start-kit/preview](https://d2.pub/d2-admin-start-kit/preview) | China server | [![](https://github.com/d2-projects/d2-admin-start-kit/workflows/Deploy%20https%3A%2F%2Fd2.pub/badge.svg)](https://github.com/d2-projects/d2-admin-start-kit/actions?query=workflow%3A%22Deploy+https%3A%2F%2Fd2.pub%22) |
-| cdn.d2.pub | [cdn.d2.pub/d2-admin-start-kit/preview](https://cdn.d2.pub/d2-admin-start-kit/preview) | qiniu CDN | [![](https://github.com/d2-projects/d2-admin-start-kit/workflows/Deploy%20https%3A%2F%2Fcdn.d2.pub/badge.svg)](https://github.com/d2-projects/d2-admin-start-kit/actions?query=workflow%3A%22Deploy+https%3A%2F%2Fcdn.d2.pub%22) |
-| github | [d2-projects.github.io/d2-admin-start-kit](https://d2-projects.github.io/d2-admin-start-kit) | GitHub pages | [![](https://github.com/d2-projects/d2-admin-start-kit/workflows/Deploy%20Github/badge.svg)](https://github.com/d2-projects/d2-admin-start-kit/actions?query=workflow%3A%22Deploy+Github%22) |
-| netlify | [d2-admin-start-kit.netlify.com](https://d2-admin-start-kit.netlify.com) | Netlify CDN | [![](https://api.netlify.com/api/v1/badges/08ff8c93-f0a8-497a-a081-440b31fb3aa4/deploy-status)](https://app.netlify.com/sites/d2-admin-start-kit/deploys) |
+* RBAC模型权限控制
+* 文件管理 (开发中)
+* 图片上传、压缩、裁剪（开发中)
+* 微信、小程序管理及接入 (开发中)
+* Swoole对接 (计划)
 
-## Other synchronous repositories
+## 安装
 
-| type | link |
-| --- | --- |
-| gitee | [https://gitee.com/fairyever/d2-admin](https://gitee.com/fairyever/d2-admin) |
-| coding | [https://d2-projects.coding.net/p/d2-projects/d/d2-admin/git](https://d2-projects.coding.net/p/d2-projects/d/d2-admin/git) |
+~~~
+composer install
+~~~
+
+## 框架 [Vue2.0](https://vuejs.org/)
+
+<a href="https://vuejs.org/"><img src="https://vuejs.org/images/logo.png" width="200px"></a>
+
+## 基于 D2Admin 开发
+<a href="https://github.com/d2-projects/d2-admin" target="_blank"><img src="https://raw.githubusercontent.com/FairyEver/d2-admin/master/doc/image/d2-admin@2x.png" width="200px"></a>
+
+## 版权信息
+
+更多细节参阅 [LICENSE.txt](LICENSE.txt)
