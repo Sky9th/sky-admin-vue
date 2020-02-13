@@ -55,15 +55,15 @@ export default {
             return data.title.indexOf(value) !== -1
         },
         saveRolePermission () {
-            let checkedNodes = this.$refs.tree.getCheckedNodes(true, false)
-            let checkedPermissins = []
+            let checkedNodes = this.$refs.tree.getCheckedNodes(false, true)
+            let checkedPermissions = []
             for (let checked of checkedNodes) {
-                checkedPermissins.push(checked.id)
+                checkedPermissions.push(checked.id)
             }
             let data = {
                 role_id: this.role.id,
-                permissions: checkedPermissins
-            };
+                permissions: checkedPermissions
+            }
             this.loading = true
             roleService.savePermission(data).then(data => {
                 this.loading = false

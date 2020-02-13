@@ -15,6 +15,8 @@ export function resource (router) {
             if (query.id) {
                 return request.put(router + '/' + query.id, query)
             } else {
+                console.log(1111111111111)
+                console.log(query)
                 return request.post(router, query)
             }
         },

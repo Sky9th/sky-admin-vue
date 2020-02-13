@@ -2,7 +2,7 @@
     <el-dialog title="用户信息" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :destroy-on-close="true">
         <el-form ref="form" :model="form" label-width="80px" size="small">
             <el-form-item prop="username" label="账号" :rules="[{ required: true, message: '不能为空'}]">
-                <el-input v-model="form.username" />
+                <el-input v-model="form.username" :disabled="user.id > 0" />
             </el-form-item>
             <el-form-item prop="password" label="密码">
                 <el-input v-model="form.password" type="password" />
@@ -42,12 +42,7 @@ export default {
         return {
             loading: false,
             dialogVisible: false,
-            form: {
-                name: '',
-                trueName: '',
-                phone: '',
-                email: ''
-            }
+            form: {}
         }
     },
     watch: {
@@ -64,6 +59,7 @@ export default {
             if (this.user.id) {
                 userService.read(this.user.id).then(data => {
                     this.form = data
+                    console.log(data)
                 })
             } else {
                 this.form = {}
@@ -73,8 +69,13 @@ export default {
             this.$refs['form'].validate(valid => {
                 if (valid) {
                     this.loading = true
+                    let data = JSON.parse(JSON.stringify(this.form));
+                    if (this.user.id) {
+                        delete data.username
+                        data.id = this.user.id
+                    }
                     userService
-                        .save({ ...this.form, id: this.user.id })
+                        .save(data)
                         .then(data => {
                             this.loading = false
                             this.dialogVisible = false
