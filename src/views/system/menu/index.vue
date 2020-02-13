@@ -60,7 +60,7 @@
                         <el-form-item v-if="formEdit">
                             <el-button type="primary" @click="submit">提交</el-button>
                             <el-button @click="reset">清空</el-button>
-                            <el-button v-if="menuform.id && menuform.type===2" @click="openInterfaceDialog">关联接口
+                            <el-button v-if="menuform.id && menuform.type===1" @click="openInterfaceDialog">关联接口
                             </el-button>
                         </el-form-item>
                     </el-form>

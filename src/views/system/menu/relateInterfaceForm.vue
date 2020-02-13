@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="dialogVisible" @open="dialogOpen">
+    <el-dialog :visible.sync="dialogVisible" @open="dialogOpen" @close="close" :destroy-on-close="true">
         <div slot="title">关联
             <el-tag>{{menu.title}}</el-tag>
             接口
@@ -31,9 +31,9 @@
 
         <el-table :data="tableData" v-loading="loading" size="small" stripe highlight-current-row style="width: 100%;"
                   @sort-change="handleSortChange">
-            <el-table-column label="名称" prop="name" sortable="custom" :show-overflow-tooltip="true">
+            <el-table-column label="名称" prop="title" sortable="custom" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
-                    {{scope.row.name}}
+                    {{scope.row.title}}
                 </template>
             </el-table-column>
             <el-table-column label="路径" prop="path" sortable="custom" :show-overflow-tooltip="true">
@@ -53,15 +53,15 @@
             </el-table-column>
             <el-table-column label="状态" prop="isAdd">
                 <template slot-scope="scope">
-                    <el-tag v-if="scope.row.isAdd==2" size="mini" type="info">未添加</el-tag>
-                    <el-tag v-if="scope.row.isAdd==1" size="mini" type="success">已添加</el-tag>
+                    <el-tag v-if="!scope.row.menu_id" size="mini" type="info">未添加</el-tag>
+                    <el-tag v-else size="mini" type="success">已添加</el-tag>
                 </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作" align="center">
                 <template slot-scope="scope">
-                    <el-button v-if="scope.row.isAdd==2" type="primary" title="添加" size="mini" icon="el-icon-plus"
+                    <el-button v-if="!scope.row.menu_id" type="primary" title="添加" size="mini" icon="el-icon-plus"
                                circle @click="relateInterface(scope.row.id,1)"></el-button>
-                    <el-button v-if="scope.row.isAdd==1" type="danger" title="移除" size="mini" icon="el-icon-minus"
+                    <el-button v-else type="danger" title="移除" size="mini" icon="el-icon-minus"
                                circle @click="relateInterface(scope.row.id,0)"></el-button>
                 </template>
             </el-table-column>
@@ -76,7 +76,7 @@
     </el-dialog>
 </template>
 <script>
-import * as interfaceService from '@/api/sys/api'
+import interfaceService from '@/api/sys/api'
 
 export default {
     name: 'relateInterfaceForm',
@@ -123,12 +123,12 @@ export default {
                 pageSize: this.page.size,
                 sortBy: this.sort.prop,
                 descending: this.sort.order === 'descending',
-                ...this.searchForm,
+                filter: this.searchForm,
                 functionId: this.menu.id
             }
-            interfaceService.getInterfacePagedList(query).then(data => {
-                this.tableData = data.rows
-                this.page.total = data.totalCount
+            interfaceService.indexByMenuId(this.menu.id, query).then(data => {
+                this.tableData = data.data
+                this.page.total = data.total
             })
         },
         handleSearchFormSubmit () {
@@ -152,13 +152,13 @@ export default {
         },
         relateInterface (interfaceId, action) {
             interfaceService
-                .relateInterface({
-                    functionId: this.menu.id,
-                    interfaceId: interfaceId,
+                .modifyMenu({
+                    menu_id: this.menu.id,
+                    api_id: interfaceId,
                     action: action
                 })
                 .then(() => {
-                    let msg = action == 1 ? '已添加' : '已移除'
+                    let msg = action === 1 ? '已添加' : '已移除'
                     this.$notify({
                         title: '操作成功',
                         message: msg,
@@ -166,6 +166,9 @@ export default {
                     })
                     this.getTableData()
                 })
+        },
+        close () {
+            this.tableData = []
         }
     }
 }
