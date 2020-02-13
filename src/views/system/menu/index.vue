@@ -38,7 +38,7 @@
                             <el-input v-model="menuform.path" :disabled="!formEdit" placeholder="请输入路径"/>
                         </el-form-item>
                         <el-form-item label="图标" prop="icon">
-                            <d2-icon-select v-model="menuform.icon" :user-input="true"/>
+                            <d2-icon-select v-model="menuform.icon" :disabled="!formEdit" :user-input="true"/>
                         </el-form-item>
                         <el-form-item label="权限标识" prop="permission">
                             <el-input v-model="menuform.permission" :disabled="!formEdit"

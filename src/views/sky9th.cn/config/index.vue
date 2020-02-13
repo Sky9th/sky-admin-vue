@@ -1,6 +1,6 @@
 <template>
     <d2-container>
-        <el-form ref="form" :model="form" label-width="100px">
+        <el-form ref="form" :model="form" label-width="100px" size="small">
             <el-form-item label="网站标题">
                 <el-input v-model="form.title" />
             </el-form-item>
