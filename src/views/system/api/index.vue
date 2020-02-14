@@ -38,8 +38,8 @@
                 操作提示
             </el-button>
         </el-popover>
-        <el-table :data="tableData" v-loading="loading" size="small" stripe highlight-current-row style="width: 100%;"
-                  @selection-change="handleSelectionChange" @sort-change="handleSortChange">
+        <el-table ref="table" :data="tableData" v-loading="loading" size="small" stripe highlight-current-row style="width: 100%;" @select="select"
+                  @selection-change="handleSelectionChange" @sort-change="handleSortChange" row-key="id" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
 
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -137,6 +137,19 @@ export default {
         handleSearchFormReset () {
             this.$refs.searchForm.resetFields()
         },
+        select (val, row) {
+            let checked = false
+            val.map(s => {
+                if (s.id === row.id) {
+                    checked = true
+                }
+            })
+            if ('children' in row && row.children.length > 0) {
+                row.children.map(s => {
+                    this.$refs['table'].toggleRowSelection(s, checked)
+                })
+            }
+        },
         handleSelectionChange (val) {
             this.multipleSelection = val
         },
@@ -168,9 +181,7 @@ export default {
                 cancelButtonText: '取消'
             }).then(() => {
                 interfaceService
-                    .del({
-                        ids: JSON.stringify(this.multipleSelection.map(s => s.id))
-                    })
+                    .del(this.multipleSelection.map(s => s.id))
                     .then(() => {
                         this.getTableData()
                     })

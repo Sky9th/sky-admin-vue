@@ -4,6 +4,15 @@
             <el-form-item prop="title" label="名称" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.title" />
             </el-form-item>
+            <el-form-item v-if="!form.id" prop="type" label="资源接口" :rules="[{ required: true, message: '不能为空'}]">
+                <el-radio-group v-model="form.type">
+                    <el-radio :label="0">否</el-radio>
+                    <el-radio :label="1">是</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item prop="permission" label="权限标识" :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="form.permission"/>
+            </el-form-item>
             <el-form-item prop="path" label="路径" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.path"/>
             </el-form-item>
@@ -35,12 +44,7 @@ export default {
         return {
             loading: false,
             dialogVisible: false,
-            form: {
-                name: '',
-                path: '',
-                method: '',
-                description: ''
-            }
+            form: {}
         }
     },
     watch: {
@@ -56,15 +60,12 @@ export default {
             this.$refs.form.resetFields()
             if (this.entity.id) {
                 interfaceService.read(this.entity.id).then(data => {
-                    let form = {}
-                    form.title = data.title
-                    form.path = data.path
-                    form.method = data.method
-                    form.description = data.description
-                    this.form = form
+                    this.form = data
                 })
             } else {
-                this.form = {}
+                this.form = {
+                    type: 0
+                }
             }
         },
         saveInterface () {
