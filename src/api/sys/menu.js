@@ -3,8 +3,8 @@ import { resource } from '@/api/resource'
 
 const api = resource('menus')
 
-api.indexByRoleId = function (roleId, query) {
-    return request.get('menu/indexByRoleId/' + roleId, { params: query })
+api.indexByRoleId = function (roleId) {
+    return request.get('menu/indexByRoleId/' + roleId)
 }
 
 api.indexWithApi = function () {

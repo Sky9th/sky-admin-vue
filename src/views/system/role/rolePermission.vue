@@ -5,7 +5,7 @@
             权限
         </div>
         <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText" style="padding-bottom: 5px;"/>
-        <el-tree ref="tree" show-checkbox default-expand-all :props="{label: 'title'}"
+        <el-tree ref="tree" show-checkbox default-expand-all :props="{label: 'title'}" check-strictly
                  highlight-current node-key="id" :data="permissionList" :filter-node-method="filterNode"
                  :expand-on-click-node="false">
               <span slot-scope="{ node, data }">
@@ -51,8 +51,9 @@ export default {
     methods: {
         async dialogOpen () {
             this.permissionList = await menuService.indexWithApi()
-            let rolePermissions = await menuService.indexByRoleId(this.role.id)
-            let rolePermissionList = rolePermissions.map(s => s.id)
+            let menuPermissions = await menuService.indexByRoleId(this.role.id)
+            let apiPermissions = await apiService.indexByRoleId(this.role.id)
+            let rolePermissionList = menuPermissions.map(s => s.id).concat(apiPermissions.map(s => 'api_' + s.id))
             this.$refs.tree.setCheckedKeys(rolePermissionList)
         },
         filterNode (value, data) {
@@ -76,11 +77,6 @@ export default {
                 // eslint-disable-next-line handle-callback-err
             }).catch(err => {
                 this.loading = false
-            })
-        },
-        getApi (menuId) {
-            apiService.indexByMenuId(menuId, { relation: 'INNER' }).then(data => {
-                this.api = data
             })
         },
         close () {
