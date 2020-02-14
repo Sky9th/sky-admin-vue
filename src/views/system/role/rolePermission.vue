@@ -1,23 +1,27 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible" @open="dialogOpen" @close="close" :destroy-on-close="true">
-    <div slot="title">维护
-      <el-tag>{{role.title}}</el-tag>权限</div>
-    <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText" style="padding-bottom: 5px;" />
-    <el-tree ref="tree" show-checkbox check-on-click-node default-expand-all :props="{label: 'title'}" highlight-current node-key="id" :data="permissionList" :filter-node-method="filterNode" :expand-on-click-node="false">
-      <span slot-scope="{ node, data }">
-        <i v-if="data.type === 2" class="fa fa-cog" />&nbsp;{{ node.label }}
-      </span>
-    </el-tree>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="loading" @click="saveRolePermission">保存</el-button>
-      <el-button @click="close">取消</el-button>
-    </div>
-  </el-dialog>
-
+    <el-dialog :visible.sync="dialogVisible" @open="dialogOpen" @close="close" :destroy-on-close="true">
+        <div slot="title">维护
+            <el-tag>{{role.title}}</el-tag>
+            权限
+        </div>
+        <el-input size="mini" placeholder="输入关键字进行过滤" v-model="filterText" style="padding-bottom: 5px;"/>
+        <el-tree ref="tree" show-checkbox default-expand-all :props="{label: 'title'}"
+                 highlight-current node-key="id" :data="permissionList" :filter-node-method="filterNode"
+                 :expand-on-click-node="false">
+              <span slot-scope="{ node, data }">
+                  <span><i v-if="data.type === 1" class="fa fa-cog"/><i v-if="data.type === 2" class="fa fa-chevron-up"/>&nbsp;{{ node.label }}</span>&nbsp;&nbsp;
+              </span>
+        </el-tree>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" :loading="loading" @click="saveRolePermission">保存</el-button>
+            <el-button @click="close">取消</el-button>
+        </div>
+    </el-dialog>
 </template>
 <script>
 import roleService from '@/api/sys/role'
 import menuService from '@/api/sys/menu'
+import apiService from '@/api/sys/api'
 export default {
     name: 'rolePermission',
     props: {
@@ -29,7 +33,8 @@ export default {
             loading: false,
             dialogVisible: false,
             filterText: '',
-            permissionList: []
+            permissionList: [],
+            api: {}
         }
     },
     watch: {
@@ -45,7 +50,7 @@ export default {
     },
     methods: {
         async dialogOpen () {
-            this.permissionList = await menuService.index()
+            this.permissionList = await menuService.indexWithApi()
             let rolePermissions = await menuService.indexByRoleId(this.role.id)
             let rolePermissionList = rolePermissions.map(s => s.id)
             this.$refs.tree.setCheckedKeys(rolePermissionList)
@@ -71,6 +76,11 @@ export default {
                 // eslint-disable-next-line handle-callback-err
             }).catch(err => {
                 this.loading = false
+            })
+        },
+        getApi (menuId) {
+            apiService.indexByMenuId(menuId, { relation: 'INNER' }).then(data => {
+                this.api = data
             })
         },
         close () {
