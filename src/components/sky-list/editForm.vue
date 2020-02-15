@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="用户信息" width="68%" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :destroy-on-close="true">
+    <el-dialog title="用户信息" width="68%" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :close-on-click-modal="false" :destroy-on-close="true">
         <el-form ref="form" :model="data" label-width="80px" size="small">
             <el-form-item :prop="index" :label="field[index]" v-for="(item, index) in form" :key="index">
                 <el-input v-if="item === 'input'" v-model="data[index]" />

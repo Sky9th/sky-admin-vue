@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="用户信息" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :destroy-on-close="true">
+    <el-dialog title="用户信息" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :close-on-click-modal="false" :destroy-on-close="true">
         <el-form ref="form" :model="form" label-width="80px" size="small">
             <el-form-item prop="username" label="账号" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.username" :disabled="user.id > 0" />

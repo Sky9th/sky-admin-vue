@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="接口信息" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :destroy-on-close="true">
+    <el-dialog title="接口信息" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :close-on-click-modal="false" :destroy-on-close="true">
         <el-form ref="form" :model="form" label-width="80px" size="small">
             <el-form-item prop="title" label="名称" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.title" />
@@ -18,8 +18,15 @@
             <el-form-item prop="path" label="路径" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.path"/>
             </el-form-item>
-            <el-form-item prop="method" label="方法" :rules="[{ required: true, message: '不能为空'}]">
-                <el-input v-model="form.method"/>
+            <el-form-item prop="method" label="方法" :rules="[{ required: true, message: '不能为空'}]" v-if="!form.type">
+                <el-select v-model="form.method" placeholder="请选择">
+                    <el-option
+                            v-for="item in methods"
+                            :key="item"
+                            :label="item"
+                            :value="item">
+                    </el-option>
+                </el-select>
             </el-form-item>
             <el-form-item prop="description" label="描述">
                 <el-input type="textarea" v-model="form.description"/>
@@ -44,6 +51,12 @@ export default {
     },
     data () {
         return {
+            methods: [
+                'GET',
+                'POST',
+                'PUT',
+                'DELETE'
+            ],
             loading: false,
             dialogVisible: false,
             form: {}

@@ -5,8 +5,8 @@
             接口
         </div>
         <el-form :inline="true" :model="searchForm" ref="searchForm" size="mini" style="margin-bottom: -18px;">
-            <el-form-item label="名称" prop="name">
-                <el-input v-model="searchForm.name" placeholder="名称" style="width: 100px;"/>
+            <el-form-item label="名称" prop="title">
+                <el-input v-model="searchForm.title" placeholder="名称" style="width: 100px;"/>
             </el-form-item>
             <el-form-item label="路径" prop="path">
                 <el-input v-model="searchForm.path" placeholder="路径" style="width: 120px;"/>

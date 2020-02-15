@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="角色信息" :visible.sync="dialogVisible" @opened="dialogOpen" @closed="dialogClose">
+    <el-dialog title="角色信息" :visible.sync="dialogVisible" @opened="dialogOpen" @closed="dialogClose" :close-on-click-modal="false">
         <el-form ref="form" :model="form" label-width="80px" size="small">
             <el-form-item prop="title" label="角色名称" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.title"/>
