@@ -163,9 +163,7 @@ export default {
                 cancelButtonText: '取消'
             }).then(() => {
                 this.api
-                    .del({
-                        ids: JSON.stringify(this.multipleSelection.map(s => s.id))
-                    })
+                    .del(this.multipleSelection.map(s => s.id))
                     .then(() => {
                         this.getTableData()
                     })
