@@ -1,31 +1,18 @@
 import request from '@/plugin/axios'
+import { resource } from '@/api/resource'
 
-const api = {
-    index (query) {
-        return request.get('roles', { params: query })
-    },
-    indexByUserId (userId, query) {
-        return request.get('role/indexByUserId/' + userId, { params: query })
-    },
-    read (id) {
-        return request.get('roles/' + id)
-    },
-    save (query) {
-        if (query.id) {
-            return request.put('roles/' + query.id, query)
-        } else {
-            return request.post('roles', query)
-        }
-    },
-    del (id) {
-        return request.delete('roles/' + id)
-    },
-    savePermission (data) {
-        return request.post('role/savePermission', data)
-    },
-    modifyUser (data) {
-        return request.post('role/modifyUser', data)
-    }
+const api = resource('roles')
+
+api.indexByUserId = function (userId, query) {
+    return request.get('role/indexByUserId/' + userId, { params: query })
+}
+
+api.savePermission = function (data) {
+    return request.post('role/savePermission', data)
+}
+
+api.modifyUser = function (data) {
+    return request.post('role/modifyUser', data)
 }
 
 export default api
