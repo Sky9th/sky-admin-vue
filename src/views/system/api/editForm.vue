@@ -11,7 +11,9 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item prop="permission" label="权限标识" :rules="[{ required: true, message: '不能为空'}]">
-                <el-input v-model="form.permission"/>
+                <el-input v-model="form.permission">
+                    <template slot="prepend">i_</template>
+                </el-input>
             </el-form-item>
             <el-form-item prop="path" label="路径" :rules="[{ required: true, message: '不能为空'}]">
                 <el-input v-model="form.path"/>
@@ -60,6 +62,7 @@ export default {
             this.$refs.form.resetFields()
             if (this.entity.id) {
                 interfaceService.read(this.entity.id).then(data => {
+                    data.permission = data.permission.slice(2)
                     this.form = data
                 })
             } else {

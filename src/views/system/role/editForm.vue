@@ -1,27 +1,30 @@
 <template>
-  <el-dialog title="角色信息" :visible.sync="dialogVisible" @opened="dialogOpen" @closed="dialogClose">
-    <el-form ref="form" :model="form" label-width="80px" size="small">
-      <el-form-item prop="title" label="角色名称" :rules="[{ required: true, message: '不能为空'}]">
-        <el-input v-model="form.title"/>
-      </el-form-item>
-      <el-form-item prop="permission" label="角色标识" :rules="[{ required: true, message: '不能为空'}]">
-        <el-input v-model="form.permission"/>
-      </el-form-item>
-      <el-form-item label="备注">
-        <el-input type="textarea" v-model="form.description"/>
-      </el-form-item>
+    <el-dialog title="角色信息" :visible.sync="dialogVisible" @opened="dialogOpen" @closed="dialogClose">
+        <el-form ref="form" :model="form" label-width="80px" size="small">
+            <el-form-item prop="title" label="角色名称" :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="form.title"/>
+            </el-form-item>
+            <el-form-item prop="permission" label="角色标识" :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="form.permission">
+                    <template slot="prepend">r_</template>
+                </el-input>
+            </el-form-item>
+            <el-form-item label="备注">
+                <el-input type="textarea" v-model="form.description"/>
+            </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" :loading="loading" @click="saveRole">保存</el-button>
-        <el-button @click="dialogClose">取消</el-button>
-      </el-form-item>
-    </el-form>
+            <el-form-item>
+                <el-button type="primary" :loading="loading" @click="saveRole">保存</el-button>
+                <el-button @click="dialogClose">取消</el-button>
+            </el-form-item>
+        </el-form>
 
-  </el-dialog>
+    </el-dialog>
 
 </template>
 <script>
 import roleService from '@/api/sys/role'
+
 export default {
     name: 'roleEditForm',
     props: {
@@ -55,7 +58,7 @@ export default {
                 roleService.read(this.role.id).then(data => {
                     let form = {}
                     form.title = data.title
-                    form.permission = data.permission
+                    form.permission = data.permission.slice(2)
                     form.description = data.description
                     this.form = form
                 })

@@ -41,8 +41,9 @@
                             <d2-icon-select v-model="menuform.icon" :disabled="!formEdit" :user-input="true"/>
                         </el-form-item>
                         <el-form-item label="权限标识" prop="permission">
-                            <el-input v-model="menuform.permission" :disabled="!formEdit"
-                                      placeholder="请输入权限标识"/>
+                            <el-input v-model="menuform.permission" :disabled="!formEdit" placeholder="请输入权限标识">
+                                <template slot="prepend">p_</template>
+                            </el-input>
                         </el-form-item>
                         <el-form-item label="排序" prop="sort">
                             <el-input v-model="menuform.sort" :disabled="!formEdit" placeholder="请输入排序"/>
@@ -128,7 +129,7 @@ export default {
                     title: data.title,
                     path: data.path,
                     icon: data.icon,
-                    permission: data.permission,
+                    permission: data.permission.slice(2),
                     sort: data.sort,
                     type: data.type,
                     isLock: data.isLock
@@ -167,6 +168,7 @@ export default {
             menuService.save(this.menuform).then(() => {
                 menuService.index().then(data => {
                     this.menuList = data
+                    this.formEdit = false
                 })
             })
         },
