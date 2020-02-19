@@ -2,9 +2,10 @@
     <el-dialog title="用户信息" width="68%" :visible.sync="dialogVisible" @opened="dialogOpen" @close="close" :close-on-click-modal="false" :destroy-on-close="true">
         <el-form ref="form" :model="data" label-width="80px" size="small">
             <el-form-item :prop="index" :label="field[index]" v-for="(item, index) in form" :key="index">
-                <el-input v-if="item === 'input'" v-model="data[index]" />
-                <el-input type="textarea" v-if="item === 'textarea'" :rows="5" v-model="data[index]" />
-                <editor v-if="item === 'editor'" v-model="data[index]" />
+                <el-input v-if="item.type === 'input'" v-model="data[index]" />
+                <el-input v-if="item.type === 'textarea'" type="textarea" :rows="5" v-model="data[index]" />
+                <sky-editor v-if="item.type === 'editor'" v-model="data[index]" />
+                <sky-upload v-if="item.type === 'image'" type="image" v-model="data[index]" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" :loading="loading" @click="saveUser">保存</el-button>
@@ -14,9 +15,10 @@
     </el-dialog>
 </template>
 <script>
-import editor from '@/components/sky-editor'
+import skyEditor from '@/components/sky-editor'
+import skyUpload from '@/components/sky-upload'
 export default {
-    components: { editor },
+    components: { skyEditor, skyUpload },
     props: {
         info: Object,
         form: Object,
