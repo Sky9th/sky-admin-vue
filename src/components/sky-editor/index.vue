@@ -1,6 +1,6 @@
 <template>
     <quill-editor  v-model="value"
-                   style="height:400px;padding-bottom: 80px"
+                   style="height:400px;padding-bottom: 110px"
                    ref="myQuillEditor"
                    :options="options"
                    @blur="onEditorBlur($event)"
