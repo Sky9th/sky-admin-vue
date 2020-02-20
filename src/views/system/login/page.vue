@@ -63,6 +63,7 @@ export default {
     ],
     data () {
         return {
+            verifyLoading: false,
             verifyImg: false,
             timeInterval: null,
             time: dayjs().format('HH:mm:ss'),
@@ -115,9 +116,13 @@ export default {
             this.time = dayjs().format('HH:mm:ss')
         },
         refreshVerify () {
-            LoginVerify(this.formLogin.username).then(data => {
-                this.verifyImg = data
-            })
+            if (!this.verifyLoading) {
+                this.verifyLoading = true
+                LoginVerify(this.formLogin.username).then(data => {
+                    this.verifyImg = data
+                    this.verifyLoading = false
+                })
+            }
         },
         submit () {
             this.$refs.loginForm.validate((valid) => {
