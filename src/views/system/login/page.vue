@@ -15,7 +15,7 @@
                     <!-- form -->
                     <div class="page-login--form">
                         <el-card shadow="never">
-                            <el-form :model="formLogin" :rules="rules" label-position="top" ref="loginForm"
+                            <el-form :model="formLogin" :rules="rules" label-position="top" ref="loginForm" @submit="submit"
                                      size="default">
                                 <el-form-item prop="username">
                                     <el-input placeholder="用户名" type="text" v-model="formLogin.username" @blur="refreshVerify"><i

@@ -1,6 +1,5 @@
 <template>
     <quill-editor  v-model="value"
-                   style="height:400px;padding-bottom: 110px"
                    ref="myQuillEditor"
                    :options="options"
                    @blur="onEditorBlur($event)"
@@ -60,16 +59,16 @@ export default {
     // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
     methods: {
         onEditorBlur (quill) {
-            console.log('editor blur!', quill)
+            // console.log('editor blur!', quill)
         },
         onEditorFocus (quill) {
-            console.log('editor focus!', quill)
+            // console.log('editor focus!', quill)
         },
         onEditorReady (quill) {
-            console.log('editor ready!', quill)
+            // console.log('editor ready!', quill)
         },
         onEditorChange ({ quill, html, text }) {
-            console.log('editor change!', quill, html, text)
+            // console.log('editor change!', quill, html, text)
             this.content = html
         }
     },
@@ -79,7 +78,8 @@ export default {
         }
     },
     mounted () {
-        console.log('this is current quill instance object', this.editor)
+        // console.log('this is current quill instance object', this.editor)
+        this.editor.container.style.height = '500px'
     }
 }
 
