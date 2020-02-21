@@ -1,7 +1,8 @@
 <template>
-    <quill-editor  v-model="value"
+    <quill-editor  v-model="content"
                    ref="myQuillEditor"
                    :options="options"
+                   @change="onEditorChange"
                    @blur="onEditorBlur($event)"
                    @focus="onEditorFocus($event)"
                    @ready="onEditorReady($event)" >
@@ -51,8 +52,18 @@ export default {
             }
         }
     },
+    model: {
+        prop: 'value',
+        event: 'set'
+    },
     data () {
         return {
+            content: ''
+        }
+    },
+    watch: {
+        value () {
+            this.content = this.value
         }
     },
     // manually control the data synchronization
@@ -69,7 +80,7 @@ export default {
         },
         onEditorChange ({ quill, html, text }) {
             // console.log('editor change!', quill, html, text)
-            this.content = html
+            this.$emit('set', html)
         }
     },
     computed: {
