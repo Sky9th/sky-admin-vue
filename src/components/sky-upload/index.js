@@ -1,5 +1,8 @@
 // 组件
-import image from './image'
+import image from './image' // 单图上传
+import images from './images' // 单图上传
+
+import util from '@/libs/util'
 
 export default {
     name: 'd2-container',
@@ -11,9 +14,8 @@ export default {
             default: 'image'
         },
         value: {
-            type: Number,
             required: false,
-            default: 0
+            default: null
         }
     },
     model: {
@@ -24,14 +26,23 @@ export default {
         // 始终返回渲染组件
         component () {
             if (this.type === 'image') return image
+            if (this.type === 'images') return images
+        },
+        headers () {
+            let signature = util.encrypt.getSignatureParam()
+            signature['X-Requested-With'] = 'XMLHttpRequest';
+            return signature
         }
     },
     render: function (createElement) {
         return createElement(
             this.component,
             {
+                ref: this.type,
                 props: {
-                    value: this.value
+                    value: this.value,
+                    action: process.env.VUE_APP_API + '/upload',
+                    headers: this.headers
                 },
                 on: {
                     set: this.set

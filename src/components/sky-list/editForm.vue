@@ -6,6 +6,7 @@
                 <el-input v-if="item.type === 'textarea'" type="textarea" :rows="5" v-model="data[index]" />
                 <sky-editor v-if="item.type === 'editor'" v-model="data[index]" />
                 <sky-upload v-if="item.type === 'image'" type="image" v-model="data[index]" />
+                <sky-upload v-if="item.type === 'images'" type="images" v-model="data[index]" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" :loading="loading" @click="saveUser">保存</el-button>
@@ -30,7 +31,7 @@ export default {
         return {
             data: {},
             loading: false,
-            dialogVisible: false
+            dialogVisible: true
         }
     },
     watch: {
@@ -62,7 +63,7 @@ export default {
                             this.loading = false
                             this.dialogVisible = false
                             this.$emit('submit')
-                        }).catch(err => {
+                        }).catch(() => {
                             this.loading = false
                         })
                 } else {
