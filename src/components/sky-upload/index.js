@@ -1,6 +1,7 @@
 // 组件
 import image from './image' // 单图上传
 import images from './images' // 单图上传
+import file from './file' // 单图上传
 
 import util from '@/libs/util'
 
@@ -25,12 +26,14 @@ export default {
     computed: {
         // 始终返回渲染组件
         component () {
+            if (this.type === 'file') return file
+            if (this.type === 'files') return file
             if (this.type === 'image') return image
             if (this.type === 'images') return images
         },
         headers () {
             let signature = util.encrypt.getSignatureParam()
-            signature['X-Requested-With'] = 'XMLHttpRequest';
+            signature['X-Requested-With'] = 'XMLHttpRequest'
             return signature
         }
     },
@@ -42,7 +45,8 @@ export default {
                 props: {
                     value: this.value,
                     action: process.env.VUE_APP_API + '/upload',
-                    headers: this.headers
+                    headers: this.headers,
+                    multiple: this.type === 'files'
                 },
                 on: {
                     set: this.set

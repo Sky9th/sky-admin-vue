@@ -5,8 +5,7 @@
                 <el-input v-if="item.type === 'input'" v-model="data[index]" />
                 <el-input v-if="item.type === 'textarea'" type="textarea" :rows="5" v-model="data[index]" />
                 <sky-editor v-if="item.type === 'editor'" v-model="data[index]" />
-                <sky-upload v-if="item.type === 'image'" type="image" v-model="data[index]" />
-                <sky-upload v-if="item.type === 'images'" type="images" v-model="data[index]" />
+                <sky-upload :type="item.type" v-model="data[index]" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" :loading="loading" @click="saveUser">保存</el-button>

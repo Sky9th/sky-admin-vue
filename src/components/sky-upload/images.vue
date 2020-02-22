@@ -57,13 +57,12 @@ export default {
             // 这里常规检验，看项目需求而定
             if (!isImage) {
                 this.$message.error('只能上传图片格式png、jpg、gif!')
-                return
+                return false
             }
             if (!isLt2M) {
                 this.$message.error('只能上传图片大小小于2M')
-                return
+                return false
             }
-            this.$emit('upload', params, true)
         },
         handleSuccess (res, file, fileList) {
             if (res.code === 0) {
