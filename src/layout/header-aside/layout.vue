@@ -1,86 +1,70 @@
 <template>
-  <div
-    :class="{grayMode: grayActive}"
-    :style="styleLayoutMainGroup"
-    class="d2-layout-header-aside-group">
-    <!-- 半透明遮罩 -->
-    <div class="d2-layout-header-aside-mask"></div>
-    <!-- 主体内容 -->
-    <div class="d2-layout-header-aside-content" flex="dir:top">
-      <!-- 顶栏 -->
-      <div
-        :style="{
-          opacity: this.searchActive ? 0.5 : 1
-        }"
-        class="d2-theme-header"
-        flex
-        flex-box="0">
-        <router-link :style="{width: asideCollapse ? asideWidthCollapse : asideWidth}" class="logo-group" flex-box="0"
-                     to="/index">
-          <img :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/icon-only.png`" v-if="asideCollapse">
-          <img :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/all.png`" v-else>
-        </router-link>
-        <div @click="handleToggleAside" class="toggle-aside-btn" flex-box="0">
-          <d2-icon name="bars"/>
-        </div>
-        <d2-menu-header flex-box="1"/>
-        <!-- 顶栏右侧 -->
-        <div class="d2-header-right" flex-box="0">
-          <!-- 如果你只想在开发环境显示这个按钮请添加 v-if="$env === 'development'" -->
-          <d2-header-search @click="handleSearchClick"/>
-          <d2-header-log/>
-          <d2-header-fullscreen/>
-          <d2-header-theme/>
-          <d2-header-size/>
-          <d2-header-locales/>
-          <d2-header-color/>
-          <d2-header-user/>
-        </div>
-      </div>
-      <!-- 下面 主体 -->
-      <div class="d2-theme-container" flex flex-box="1">
-        <!-- 主体 侧边栏 -->
-        <div
-          :style="{
-            width: asideCollapse ? asideWidthCollapse : asideWidth,
-            opacity: this.searchActive ? 0.5 : 1
-          }"
-          class="d2-theme-container-aside"
-          flex-box="0"
-          ref="aside">
-          <d2-menu-side/>
-        </div>
-        <!-- 主体 -->
-        <div class="d2-theme-container-main" flex flex-box="1">
-          <!-- 搜索 -->
-          <transition name="fade-scale">
-            <div class="d2-theme-container-main-layer" flex v-if="searchActive">
-              <d2-panel-search
-                @close="searchPanelClose"
-                ref="panelSearch"/>
+    <div :class="{grayMode: grayActive}" :style="styleLayoutMainGroup" class="d2-layout-header-aside-group">
+        <!-- 半透明遮罩 -->
+        <div class="d2-layout-header-aside-mask"></div>
+        <!-- 主体内容 -->
+        <div class="d2-layout-header-aside-content" flex="dir:top">
+            <!-- 顶栏 -->
+            <div :style="{ opacity: this.searchActive ? 0.5 : 1 }" class="d2-theme-header" flex flex-box="0">
+                <router-link :style="{width: asideCollapse ? asideWidthCollapse : asideWidth}" class="logo-group"
+                             flex-box="0" to="/index">
+                    <img :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/icon-only.png`"
+                         v-if="asideCollapse">
+                    <img :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/all.png`" v-else>
+                </router-link>
+                <div @click="handleToggleAside" class="toggle-aside-btn" flex-box="0">
+                    <d2-icon name="bars"/>
+                </div>
+                <d2-menu-header flex-box="1"/>
+                <!-- 顶栏右侧 -->
+                <div class="d2-header-right" flex-box="0" v-if="env === 'development'">
+                    <d2-header-search @click="handleSearchClick"/>
+                    <d2-header-log/>
+                    <d2-header-fullscreen/>
+                    <d2-header-theme/>
+                    <d2-header-size/>
+                    <d2-header-locales/>
+                    <d2-header-color/>
+                    <d2-header-user/>
+                </div>
             </div>
-          </transition>
-          <!-- 内容 -->
-          <transition name="fade-scale">
-            <div class="d2-theme-container-main-layer" flex="dir:top" v-if="!searchActive">
-              <!-- tab -->
-              <div class="d2-theme-container-main-header" flex-box="0">
-                <d2-tabs/>
-              </div>
-              <!-- 页面 -->
-              <div class="d2-theme-container-main-body" flex-box="1">
-                <transition :name="transitionActive ? 'fade-transverse' : ''">
-                  <keep-alive :include="keepAlive">
-                    <router-view/>
-                  </keep-alive>
-                </transition>
-              </div>
+            <!-- 下面 主体 -->
+            <div class="d2-theme-container" flex flex-box="1">
+                <!-- 主体 侧边栏 -->
+                <div :style="{ width: asideCollapse ? asideWidthCollapse : asideWidth, opacity: this.searchActive ? 0.5 : 1 }" class="d2-theme-container-aside" flex-box="0" ref="aside">
+                    <d2-menu-side/>
+                </div>
+                <!-- 主体 -->
+                <div class="d2-theme-container-main" flex flex-box="1">
+                    <!-- 搜索 -->
+                    <transition name="fade-scale">
+                        <div class="d2-theme-container-main-layer" flex v-if="searchActive">
+                            <d2-panel-search
+                                    @close="searchPanelClose"
+                                    ref="panelSearch"/>
+                        </div>
+                    </transition>
+                    <!-- 内容 -->
+                    <transition name="fade-scale">
+                        <div class="d2-theme-container-main-layer" flex="dir:top" v-if="!searchActive">
+                            <!-- tab -->
+                            <div class="d2-theme-container-main-header" flex-box="0">
+                                <d2-tabs/>
+                            </div>
+                            <!-- 页面 -->
+                            <div class="d2-theme-container-main-body" flex-box="1">
+                                <transition :name="transitionActive ? 'fade-transverse' : ''">
+                                    <keep-alive :include="keepAlive">
+                                        <router-view/>
+                                    </keep-alive>
+                                </transition>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
             </div>
-          </transition>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -118,7 +102,8 @@ export default {
     },
     data () {
         return {
-        // [侧边栏宽度] 正常状态
+            env: process.env.NODE_ENV,
+            // [侧边栏宽度] 正常状态
             asideWidth: '200px',
             // [侧边栏宽度] 折叠状态
             asideWidthCollapse: '65px'
@@ -135,8 +120,8 @@ export default {
             themeActiveSetting: 'theme/activeSetting'
         }),
         /**
-       * @description 最外层容器的背景图片样式
-       */
+             * @description 最外层容器的背景图片样式
+             */
         styleLayoutMainGroup () {
             return {
                 ...this.themeActiveSetting.backgroundImage ? {
@@ -150,8 +135,8 @@ export default {
             'asideCollapseToggle'
         ]),
         /**
-       * 接收点击切换侧边栏的按钮
-       */
+             * 接收点击切换侧边栏的按钮
+             */
         handleToggleAside () {
             this.asideCollapseToggle()
         }
@@ -160,6 +145,6 @@ export default {
 </script>
 
 <style lang="scss">
-  // 注册主题
-  @import '~@/assets/style/theme/register.scss';
+    // 注册主题
+    @import '~@/assets/style/theme/register.scss';
 </style>
