@@ -19,5 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
 /src/views/eft/
 /src/api/eft/
