@@ -30,7 +30,7 @@ export default {
         return {
             data: {},
             loading: false,
-            dialogVisible: true
+            dialogVisible: false
         }
     },
     watch: {

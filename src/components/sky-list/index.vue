@@ -33,7 +33,11 @@
             <el-table :data="tableData" v-loading="loading" size="small" stripe highlight-current-row style="width: 100%;"
                       @selection-change="handleSelectionChange" @sort-change="handleSortChange">
                 <el-table-column type="selection" width="55" />
-                <el-table-column :label="structure.field[item]" :prop="item" sortable="custom" v-for="(item, index) in structure.thead" :key="index">
+                <el-table-column :label="structure.field[index]" :prop="index" sortable="custom" v-for="(item, index) in structure.thead" :key="index">
+                    <template slot-scope="scope">
+                        <span v-if="item.type === 'text'">{{scope.row[index]}}</span>
+                        <el-image v-if="item.type === 'image'" :src="scope.row[index].src" :title="scope.row[index].title"></el-image>
+                    </template>
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" align="center">
                     <template slot-scope="scope">
@@ -82,7 +86,7 @@ export default {
             multipleSelection: [],
             page: {
                 current: 1,
-                size: 100,
+                size: 15,
                 total: 0
             },
             sort: {
@@ -115,7 +119,7 @@ export default {
     methods: {
         getTableData () {
             let query = {
-                p: this.page.current_page,
+                page: this.page.current,
                 per_page: this.page.per_page,
                 order: this.sort.prop,
                 descending: this.sort.order === 'descending',
@@ -141,7 +145,7 @@ export default {
             this.getTableData()
         },
         handleSizeChange (val) {
-            this.page.size = val
+            this.page.per_page = val
             this.getTableData()
         },
         handleCurrentChange (val) {

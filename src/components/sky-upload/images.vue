@@ -5,6 +5,7 @@
                 :headers="headers"
                 :auto-upload="true"
                 :file-list="fileList"
+                :multiple="true"
                 list-type="picture-card"
                 :on-success="handleSuccess"
                 :on-progress="handleProgress"

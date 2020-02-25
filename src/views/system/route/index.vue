@@ -43,7 +43,9 @@
                             <el-input v-model="form.path" :disabled="!formEdit" placeholder="请输入路径"/>
                         </el-form-item>
                         <el-form-item label="权限标识" prop="permission">
-                            <el-input v-model="form.permission" :disabled="!formEdit" placeholder="请输入权限标识"/>
+                            <el-input v-model="form.permission" :disabled="!formEdit" placeholder="请输入权限标识">
+                                <template slot="prepend">p_</template>
+                            </el-input>
                         </el-form-item>
                         <el-form-item label="组件" prop="component">
                             <el-input v-model="form.component" :disabled="!formEdit" placeholder="请输入组件"/>

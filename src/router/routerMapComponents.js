@@ -9,5 +9,5 @@ export default {
     // Sky9th.cn Component
     'sky9th_tech': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/tech'),
     'sky9th_project': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/project'),
-    'sky9th_config': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/config')
+    'sky9th_config': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/config'),
 }

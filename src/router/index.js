@@ -12,6 +12,7 @@ import util from '@/libs/util.js'
 import routes, { frameInRoutes } from './routes'
 
 import routerMapComponents from '@/router/routerMapComponents'
+import routerMapComponentsDev from '@/router/routerMapComponents.dev.js'
 import menuHeader from '@/menu/header'
 import menuAside from '@/menu/aside'
 
@@ -45,6 +46,10 @@ let permission = {
 const formatRoutes = function (routes) {
     routes.forEach(route => {
         route.component = routerMapComponents[route.component]
+        if (route.children) {
+            formatRoutes(route.children)
+        }
+        route.component = routerMapComponentsDev[route.component]
         if (route.children) {
             formatRoutes(route.children)
         }

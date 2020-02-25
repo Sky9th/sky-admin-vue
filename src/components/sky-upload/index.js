@@ -17,6 +17,9 @@ export default {
         value: {
             required: false,
             default: null
+        },
+        fileList: {
+            required: false
         }
     },
     model: {
@@ -46,7 +49,8 @@ export default {
                     value: this.value,
                     action: process.env.VUE_APP_API + '/upload',
                     headers: this.headers,
-                    multiple: this.type === 'files'
+                    multiple: this.type === 'files',
+                    fileList: this.fileList
                 },
                 on: {
                     set: this.set

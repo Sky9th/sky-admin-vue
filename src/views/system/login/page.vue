@@ -8,8 +8,7 @@
         <div class="page-login--layer page-login--layer-time" flex="main:center cross:center">{{time}}</div>
         <div class="page-login--layer">
             <div class="page-login--content" flex="dir:top main:justify cross:stretch box:justify">
-                <div class="page-login--content-header"><p class="page-login--content-header-motto">时间是一切财富中最宝贵的财富</p>
-                </div>
+                <div class="page-login--content-header"><p class="page-login--content-header-motto">人生就是在一次次自我否定中成长</p></div>
                 <div class="page-login--content-main" flex="dir:top main:center cross:center">
                     <!-- logo --><img class="page-login--logo" src="./image/logo@2x.png">
                     <!-- form -->
@@ -34,18 +33,16 @@
                                 </el-button>
                             </el-form>
                         </el-card>
-                        <p class="page-login--options" flex="main:justify cross:center"><span><d2-icon
-                                name="question-circle"/> 忘记密码</span><span>注册用户</span></p>
                     </div>
                 </div>
-                <div class="page-login--content-footer"><p class="page-login--content-footer-locales"><a
+                <div class="page-login--content-footer">
+                    <!--<p class="page-login&#45;&#45;content-footer-locales"><a
                         :key="language.value" @click="onChangeLocale(language.value)" v-for="language in $languages">{{
-                    language.label }}</a></p>
-                    <p class="page-login--content-footer-copyright">Copyright
-                        <d2-icon name="copyright"/>
-                        2018 D2 Projects 开源组织出品<a href="https://github.com/FairyEver">@FairyEver</a></p>
-                    <p class="page-login--content-footer-options"><a href="#">帮助</a><a href="#">隐私</a><a href="#">条款</a>
-                    </p></div>
+                    language.label }}</a></p>-->
+                    <p class="page-login--content-footer-copyright">
+                        Copyright <d2-icon name="copyright"/>2020 <a href="https://github.com/Sky9th">@Sky9th</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
