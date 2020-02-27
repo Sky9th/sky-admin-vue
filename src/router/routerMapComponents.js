@@ -10,4 +10,8 @@ export default {
     'sky9th_tech': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/tech'),
     'sky9th_project': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/project'),
     'sky9th_config': () => import(/* webpackChunkName: "system" */'@/views/sky9th.cn/config'),
+    // etf-helper Component
+    'eft_good': () => import(/* webpackChunkName: "system" */'@/views/eft/good'),
+    'eft_category': () => import(/* webpackChunkName: "system" */'@/views/eft/category'),
+    'eft_import': () => import(/* webpackChunkName: "system" */'@/views/eft/import')
 }

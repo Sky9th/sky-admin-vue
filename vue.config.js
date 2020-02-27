@@ -35,7 +35,7 @@ module.exports = {
         proxy: {
             '/admin': {
                 // 要访问的跨域的域名
-                target: 'http://sky-admin.sky9th.cn/admin',
+                target: 'http://111.231.139.51:57322/admin',
                 ws: true,
                 secure: false, // 使用的是http协议则设置为false，https协议则设置为true
                 changOrigin: true,

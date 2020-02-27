@@ -4,12 +4,11 @@
         <el-form ref="form" size="small" style="margin-top: 5px" v-if="data.length > 0">
             <el-form-item>
                 <el-button type="primary" @click="scan" :loading="loading" v-if="!scanVisible">扫描</el-button>
-                <el-button @click="reset">重置</el-button>
             </el-form-item>
         </el-form>
-        <el-divider></el-divider>
+        <el-divider v-if="scanInfo.length > 0"></el-divider>
         <el-row :gutter="20">
-            <el-col :span="8" v-for="(item, index) in scanInfo" :key="index">
+            <el-col :span="8" v-for="(item, index) in scanInfo" :key="index" style="height:560px;margin-bottom: 15px">
                 <el-card shadow="hover" v-loading="!scanInfo[index].status && submitLoading">
                     <div slot="header" class="clearfix">
                         <span>{{scanInfo[index].title}} <el-icon class="el-icon-circle-check" v-if="scanInfo[index].status === 1" style="color:#59ff00"></el-icon></span>
@@ -39,6 +38,27 @@
                 <el-button @click="reset">重置</el-button>
             </el-col>
         </el-row>
+        <el-divider v-if="failList.length > 0"></el-divider>
+        <el-card v-if="failList.length > 0">
+            <div slot="header">
+                历史失败记录
+            </div>
+            <el-table :data="failList">
+                <el-table-column prop="image_url" label="图片">
+                    <template slot-scope="scope">
+                        <el-image :src="scope.row.image_url"></el-image>
+                    </template>
+                </el-table-column>
+                <el-table-column fixed="right" label="操作" align="center">
+                    <template slot-scope="scope">
+                        <el-button type="primary" title="重试" size="mini" icon="el-icon-refresh" circle
+                                   @click="retry(scope.row.id)"/>
+                        <el-button type="danger" title="忽略" size="mini" icon="el-icon-delete" circle
+                                   @click="ignore(scope.row.id)"/>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-card>
     </d2-container>
 </template>
 
@@ -50,6 +70,7 @@ export default {
     name: 'import',
     data () {
         return {
+            failList: [],
             fileList: [],
             loading: false,
             data: {},
@@ -99,12 +120,30 @@ export default {
         del (index) {
             delete this.scanInfo[index]
         },
+        fail () {
+            goodService.fail().then(data => {
+                this.failList = data
+            })
+        },
         reset () {
             this.loading = false
             this.data = {}
             this.scanInfo = []
             this.submitLoading = false
+        },
+        retry (id) {
+            goodService.retry(id).then(data => {
+                this.fail()
+            })
+        },
+        ignore (id) {
+            goodService.ignore(id).then(data => {
+                this.fail()
+            })
         }
+    },
+    mounted () {
+        this.fail()
     }
 }
 </script>
