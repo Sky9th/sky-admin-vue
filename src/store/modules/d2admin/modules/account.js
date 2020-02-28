@@ -9,22 +9,12 @@ export default {
         /**
          * @description 登录
          * @param {Object} context
-         * @param {Object} payload username {String} 用户账号
-         * @param {Object} payload password {String} 密码
-         * @param {Object} payload route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
+         * @param data
          */
-        login ({ dispatch }, {
-            username = '',
-            password = '',
-            code = ''
-        } = {}) {
+        login ({ dispatch }, data) {
             return new Promise((resolve, reject) => {
                 // 开始请求登录接口
-                AccountLogin({
-                    username,
-                    password,
-                    code
-                })
+                AccountLogin(data)
                     .then(async res => {
                         // 设置 cookie 一定要存 uuid 和 token 两个 cookie
                         // 整个系统依赖这两个数据进行校验和存储

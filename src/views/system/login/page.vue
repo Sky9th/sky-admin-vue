@@ -105,6 +105,11 @@ export default {
     beforeDestroy () {
         clearInterval(this.timeInterval)
     },
+    computed: {
+        fingerprint () {
+            return this.$store.state.d2admin.user.fingerprint
+        }
+    },
     methods: {
         ...mapActions('d2admin/account', [
             'login'
@@ -124,7 +129,8 @@ export default {
         submit () {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    this.login(this.formLogin)
+                    console.log({ ...this.formLogin, fingerprint: this.fingerprint })
+                    this.login({ ...this.formLogin, fingerprint: this.fingerprint })
                         .then(() => {
                             // 重定向对象不存在则返回顶层路径
                             this.$router.replace(this.$route.query.redirect || '/')

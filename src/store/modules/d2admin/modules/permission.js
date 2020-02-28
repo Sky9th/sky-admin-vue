@@ -13,7 +13,7 @@ export default {
             DELETE: []
         },
         // 是否管理员
-        isAdmin: false
+        isAdmin: false,
     },
     mutations: {
         set (state, data) {
