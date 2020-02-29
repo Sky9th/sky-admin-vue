@@ -41,12 +41,22 @@
         <el-divider v-if="failList.length > 0"></el-divider>
         <el-card v-if="failList.length > 0">
             <div slot="header">
-                历史失败记录
+                <span>历史失败记录</span>
+                <el-button style="margin-left: 15px" @click="mulRetry" type="primary" title="重试" size="mini" icon="el-icon-refresh" circle />
             </div>
-            <el-table :data="failList">
+            <el-table :data="failList"  @selection-change="handleSelectionChange">
+                <el-table-column
+                        type="selection"
+                        width="55">
+                </el-table-column>
                 <el-table-column prop="image_url" label="图片">
                     <template slot-scope="scope">
                         <el-image :src="scope.row.image_url"></el-image>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="result" label="报文">
+                    <template slot-scope="scope">
+                        <div v-html="scope.row.result"></div>
                     </template>
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" align="center">
@@ -72,6 +82,7 @@ export default {
         return {
             failList: [],
             fileList: [],
+            mul: [],
             loading: false,
             data: {},
             scanInfo: [],
@@ -122,6 +133,9 @@ export default {
         },
         fail () {
             goodService.fail().then(data => {
+                for (let i in data) {
+                    data[i].result = JSON.parse(data[i].result)
+                }
                 this.failList = data
             })
         },
@@ -140,6 +154,16 @@ export default {
             goodService.ignore(id).then(data => {
                 this.fail()
             })
+        },
+        handleSelectionChange (val) {
+            this.mul = val
+        },
+        async mulRetry () {
+            let val = this.mul
+            for (let i in val) {
+                await goodService.retry(val[i].id)
+            }
+            this.fail()
         }
     },
     mounted () {
