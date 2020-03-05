@@ -117,6 +117,7 @@ export default {
             let id = data.id
             routeService.read(id).then(data => {
                 this.form = { ...data }
+                this.form.permission = this.form.permission.slice(2)
                 this.currentId = id
             })
         },
