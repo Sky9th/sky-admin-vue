@@ -74,6 +74,7 @@ export default {
                         delete data.username
                         data.id = this.user.id
                     }
+                    data.type = 1
                     userService
                         .save(data)
                         .then(data => {

@@ -11,7 +11,18 @@
             <el-col :span="8" v-for="(item, index) in scanInfo" :key="index" style="height:560px;margin-bottom: 15px">
                 <el-card shadow="hover" v-loading="!scanInfo[index].status && submitLoading">
                     <div slot="header" class="clearfix">
-                        <span>{{scanInfo[index].title}} <el-icon class="el-icon-circle-check" v-if="scanInfo[index].status === 1" style="color:#59ff00"></el-icon></span>
+                        <span>
+                            <span>{{scanInfo[index].title}} </span>
+                            <template v-if="scanInfo[index].status > 0">
+                                <el-icon class="el-icon-circle-check" v-if="scanInfo[index].status === 1" style="color:#59ff00"></el-icon>
+                                <el-icon class="el-icon-circle-close" v-else style="color:#f00"></el-icon>
+                                <el-icon class="el-icon-circle-check" v-if="scanInfo[index].match === 1" style="color:#59ff00"></el-icon>
+                                <el-icon class="el-icon-circle-close" v-else style="color:#f00"></el-icon>
+                            </template>
+                            <template v-else>
+                                <el-icon class="el-icon-info"></el-icon>
+                            </template>
+                        </span>
                         <el-button style="float: right; padding: 3px 0" type="text" @click="del(index)">取消</el-button>
                     </div>
                     <el-form ref="form" size="small" style="margin-top: 5px" v-model="scanInfo[index]">
@@ -26,9 +37,6 @@
                         </el-form-item>
                         <el-form-item label="价格" prop="avg">
                             <el-input v-model="scanInfo[index].avg"></el-input>
-                        </el-form-item>
-                        <el-form-item label="分类" prop="category">
-                            <el-input v-model="scanInfo[index].category"></el-input>
                         </el-form-item>
                     </el-form>
                 </el-card>
@@ -75,6 +83,7 @@
 <script>
 import skyUpload from '@/components/sky-upload'
 import goodService from '@/api/eft/good'
+import catelogueService from '@/api/eft/catalogue'
 export default {
     components: { skyUpload },
     name: 'import',
@@ -116,11 +125,17 @@ export default {
         async submit () {
             this.submitLoading = true
             for (let i in this.scanInfo) {
+                let response = {}
                 if (this.scanInfo[i].status === 1) continue
                 await goodService.save(this.scanInfo[i]).then(res => {
                     this.scanInfo[i].status = 1
+                    response = res
                 }).catch(() => {
                     this.scanInfo[i].status = 2
+                })
+                let goodId = response.id
+                await catelogueService.match(goodId).then(res => {
+                    this.scanInfo[i].match = res ? 1 : 2
                 })
             }
             this.submitLoading = false
